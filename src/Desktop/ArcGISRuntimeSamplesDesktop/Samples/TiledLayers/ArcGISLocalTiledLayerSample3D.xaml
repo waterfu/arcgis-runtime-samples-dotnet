@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="ArcGISRuntime.Samples.Desktop.ArcGISLocalTiledLayerSample3D"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
+    <Grid>
+        <esri:SceneView>
+            <esri:Scene>
+                <esri:ArcGISLocalTiledLayer Path="..\..\..\..\samples-data\basemaps\campus.tpk" />
+            </esri:Scene>
+        </esri:SceneView>
+    </Grid>
+</UserControl>

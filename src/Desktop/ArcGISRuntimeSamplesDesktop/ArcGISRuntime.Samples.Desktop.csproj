@@ -75,12 +75,75 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Samples\3D\ArcGISDynamicMapServiceLayerSample3d.xaml.cs">
-      <DependentUpon>ArcGISDynamicMapServiceLayerSample3d.xaml</DependentUpon>
+    <Compile Include="Samples\DynamicServiceLayers\ArcGISDynamicMapServiceLayerSample3D.xaml.cs">
+      <DependentUpon>ArcGISDynamicMapServiceLayerSample3D.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Samples\3D\ArcGISTiledMapServiceLayerSample3d.xaml.cs">
-      <DependentUpon>ArcGISTiledMapServiceLayerSample3d.xaml</DependentUpon>
+    <Compile Include="Samples\FeatureLayers\FeatureLayerFromLocalGeodatabase3D.xaml.cs">
+      <DependentUpon>FeatureLayerFromLocalGeodatabase3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Geometry\BufferSample3D.xaml.cs">
+      <DependentUpon>BufferSample3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Offline\ExportTileCache3D.xaml.cs">
+      <DependentUpon>ExportTileCache3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Offline\GenerateGeodatabase3D.xaml.cs">
+      <DependentUpon>GenerateGeodatabase3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Offline\OfflineGeocoding3D.xaml.cs">
+      <DependentUpon>OfflineGeocoding3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Offline\OfflineRouting3D.xaml.cs">
+      <DependentUpon>OfflineRouting3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Offline\SyncGeodatabase3D.xaml.cs">
+      <DependentUpon>SyncGeodatabase3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\OnlineServices\Traffic3D.xaml.cs">
+      <DependentUpon>Traffic3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\QueryTasks\IdentifySample3D.xaml.cs">
+      <DependentUpon>IdentifySample3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\QueryTasks\QueryRelatedTables3D.xaml.cs">
+      <DependentUpon>QueryRelatedTables3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\QueryTasks\SpatialQuery3D.xaml.cs">
+      <DependentUpon>SpatialQuery3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\QueryTasks\Statistics - Copy.xaml.cs">
+      <DependentUpon>Statistics3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Symbology\ClassBreaksRendererSample3D.xaml.cs">
+      <DependentUpon>ClassBreaksRendererSample3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Symbology\GenerateRenderer3D.xaml.cs">
+      <DependentUpon>GenerateRenderer3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Symbology\LineFillSymbols3D.xaml.cs">
+      <DependentUpon>LineFillSymbols3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Symbology\MarkerSymbols3D.xaml.cs">
+      <DependentUpon>MarkerSymbols3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Symbology\SimpleRendererSample3D.xaml.cs">
+      <DependentUpon>SimpleRendererSample3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Symbology\SymbolsAndLabels3D.xaml.cs">
+      <DependentUpon>SymbolsAndLabels3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Symbology\TextSymbols3D.xaml.cs">
+      <DependentUpon>TextSymbols3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Symbology\UniqueValueRendererSample3D.xaml.cs">
+      <DependentUpon>UniqueValueRendererSample3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\TiledLayers\ArcGISLocalTiledLayerSample3D.xaml.cs">
+      <DependentUpon>ArcGISLocalTiledLayerSample3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\TiledLayers\ArcGISTiledMapServiceLayerSample3D.xaml.cs">
+      <DependentUpon>ArcGISTiledMapServiceLayerSample3D.xaml</DependentUpon>
     </Compile>
     <Compile Include="Samples\3D\CameraAnimationSample3d.xaml.cs">
       <DependentUpon>CameraAnimationSample3d.xaml</DependentUpon>
@@ -508,25 +571,121 @@
     <Compile Include="Samples\TiledLayers\ArcGISTiledMapServiceLayerSample.xaml.cs">
       <DependentUpon>ArcGISTiledMapServiceLayerSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Samples\TiledLayers\BingLayerSample3D.xaml.cs">
+      <DependentUpon>BingLayerSample3D.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Samples\TiledLayers\BingLayerSample.xaml.cs">
       <DependentUpon>BingLayerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\TiledLayers\OpenStreetMapLayerSample3D.xaml.cs">
+      <DependentUpon>OpenStreetMapLayerSample3D.xaml</DependentUpon>
     </Compile>
     <Compile Include="Samples\TiledLayers\OpenStreetMapLayerSample.xaml.cs">
       <DependentUpon>OpenStreetMapLayerSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Samples\TiledLayers\WebTiledLayerSample3D.xaml.cs">
+      <DependentUpon>WebTiledLayerSample3D.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Samples\TiledLayers\WebTiledLayerSample.xaml.cs">
       <DependentUpon>WebTiledLayerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\TiledLayers\WmtsLayerSample3D.xaml.cs">
+      <DependentUpon>WmtsLayerSample3D.xaml</DependentUpon>
     </Compile>
     <Compile Include="Samples\TiledLayers\WmtsLayerSample.xaml.cs">
       <DependentUpon>WmtsLayerSample.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Samples\3D\ArcGISDynamicMapServiceLayerSample3d.xaml">
+    <Page Include="Samples\DynamicServiceLayers\ArcGISDynamicMapServiceLayerSample3D.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Samples\3D\ArcGISTiledMapServiceLayerSample3d.xaml">
+    <Page Include="Samples\FeatureLayers\FeatureLayerFromLocalGeodatabase3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Geometry\BufferSample3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Offline\ExportTileCache3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Offline\GenerateGeodatabase3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Offline\OfflineGeocoding3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Offline\OfflineRouting3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Offline\SyncGeodatabase3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\OnlineServices\Traffic3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\QueryTasks\IdentifySample3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\QueryTasks\QueryRelatedTables3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\QueryTasks\SpatialQuery3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\QueryTasks\Statistics3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Symbology\ClassBreaksRendererSample3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Symbology\GenerateRenderer3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Symbology\LineFillSymbols3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Symbology\MarkerSymbols3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Symbology\SimpleRendererSample3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Symbology\SymbolsAndLabels3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Symbology\TextSymbols3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Symbology\UniqueValueRendererSample3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\TiledLayers\ArcGISLocalTiledLayerSample3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\TiledLayers\ArcGISTiledMapServiceLayerSample3D.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1094,7 +1253,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Samples\TiledLayers\BingLayerSample3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Samples\TiledLayers\BingLayerSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\TiledLayers\OpenStreetMapLayerSample3D.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1102,7 +1269,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Samples\TiledLayers\WebTiledLayerSample3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Samples\TiledLayers\WebTiledLayerSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\TiledLayers\WmtsLayerSample3D.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
