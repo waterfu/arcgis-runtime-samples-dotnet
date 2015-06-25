@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
+using TestApp.Desktop;
 
 
 namespace ArcGISRuntime.Samples.Desktop.Symbology.Specialized
@@ -29,8 +31,8 @@ namespace ArcGISRuntime.Samples.Desktop.Symbology.Specialized
 		public MessageProcessingSample()
 		{
 			InitializeComponent();
-
-			MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+			MyMapView.SetView(new Viewpoint(new Envelope(-245200, 6665900, -207000, 6687300, SpatialReferences.WebMercator)));
+			MyMapView.CameraChanged += MyMapView_ExtentChanged;
 		}
 
 		// Load data - enable functionality after layers are loaded.
@@ -38,12 +40,12 @@ namespace ArcGISRuntime.Samples.Desktop.Symbology.Specialized
 		{
 			try
 			{
-				MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+				MyMapView.CameraChanged -= MyMapView_ExtentChanged;
 
 				// Wait until all layers are loaded
 				await MyMapView.LayersLoadedAsync();
 				
-				_messageLayer = MyMapView.Map.Layers.OfType<MessageLayer>().First();
+				_messageLayer = MyMapView.Scene.Layers.OfType<MessageLayer>().First();
 				processMessagesBtn.IsEnabled = true;
 			}
 			catch (Exception ex)
@@ -162,7 +164,8 @@ namespace ArcGISRuntime.Samples.Desktop.Symbology.Specialized
 				MapPoint mapPoint = null;
 				try
 				{
-					mapPoint = await MyMapView.Editor.RequestPointAsync();
+					mapPoint = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+
 				}
 				catch (TaskCanceledException) { }
 
@@ -187,7 +190,9 @@ namespace ArcGISRuntime.Samples.Desktop.Symbology.Specialized
 				Envelope envelope = null;
 				try
 				{
-					envelope = await MyMapView.Editor.RequestShapeAsync(drawMode) as Envelope;
+					var p = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+					p = (Polygon)GeometryEngine.Project(p, SpatialReferences.WebMercator);
+					envelope = p.Extent;
 				}
 				catch (TaskCanceledException) { }
 
