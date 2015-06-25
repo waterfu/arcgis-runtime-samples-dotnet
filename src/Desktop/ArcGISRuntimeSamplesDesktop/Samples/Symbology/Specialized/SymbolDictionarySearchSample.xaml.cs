@@ -7,9 +7,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop.Symbology.Specialized
 {
@@ -73,7 +75,7 @@ namespace ArcGISRuntime.Samples.Desktop.Symbology.Specialized
             _imageSize = 64;
 
             // Get reference to MessageLayer to use with messages
-            _messageLayer = MyMapView.Map.Layers.OfType<MessageLayer>().First();
+            _messageLayer = MyMapView.Scene.Layers.OfType<MessageLayer>().First();
 
             // Fire initial search to populate the results with all symbols
             Search();
@@ -154,9 +156,26 @@ namespace ArcGISRuntime.Samples.Desktop.Symbology.Specialized
                     Esri.ArcGISRuntime.Geometry.Geometry geometry = null;
 
                     try
-                    {
-                        geometry = await MyMapView.Editor.RequestShapeAsync(requestedShape, null, null);
-                    }
+					{
+						switch (requestedShape)
+						{
+							case DrawShape.Point:
+							{
+								geometry = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+								break;
+							}
+							case DrawShape.Polyline:
+							{
+								geometry = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
+								break;
+							}
+							case DrawShape.Polygon:
+							{
+								geometry = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+								break;
+							}
+						}
+					}
                     catch { }
 
                     if (geometry == null)

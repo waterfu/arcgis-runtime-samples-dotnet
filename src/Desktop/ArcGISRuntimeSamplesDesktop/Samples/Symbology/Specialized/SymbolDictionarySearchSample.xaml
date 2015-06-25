@@ -21,13 +21,13 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <esri:MapView x:Name="MyMapView">
-            <esri:Map>
+        <esri:SceneView x:Name="MyMapView">
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer ID="Basemap"
 					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"/>
                 <special:MessageLayer ID="Messages" SymbolDictionaryType="Mil2525C" />
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
         <!-- Sample info -->
         <Border Style="{StaticResource overlayBorderStyle}"
