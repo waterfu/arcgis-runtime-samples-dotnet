@@ -12,22 +12,22 @@
 			</esri:SimpleMarkerSymbol>
 		</Grid.Resources>
 
-		<esri:MapView x:Name="MyMapView"
-					  MapViewTapped="MyMapView_MapViewTapped"
+		<esri:SceneView x:Name="MyMapView"
+					  SceneViewTapped="MyMapView_MapViewTapped"
 					  MouseMove="MyMapView_MouseMove">
-			<esri:Map>
+			<esri:Scene>
 				<esri:ArcGISTiledMapServiceLayer
 					ServiceUri="http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="MyGraphicsOverlay">
 					<esri:GraphicsOverlay.Renderer>
 						<esri:SimpleRenderer Symbol="{StaticResource PointMarkerSymbol}" />
 					</esri:GraphicsOverlay.Renderer>
 				</esri:GraphicsOverlay>
 				<esri:GraphicsOverlay ID="EditGraphicsOverlay" Opacity=".5"/>
-			</esri:MapView.GraphicsOverlays>
-		</esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+		</esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Right" VerticalAlignment="Top" 

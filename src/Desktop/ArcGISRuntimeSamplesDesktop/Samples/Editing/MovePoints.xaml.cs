@@ -66,7 +66,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			if (graphicBeingEdited != null)
 			{
 				var editGraphicsOverlay = MyMapView.GraphicsOverlays["EditGraphicsOverlay"];
-				MapView mapview = (MapView)sender;
+				SceneView mapview = (SceneView)sender;
 				var location = mapview.ScreenToLocation(e.GetPosition(mapview));
 				editGraphicsOverlay.Graphics[0].Geometry = location;
 			}

@@ -60,6 +60,7 @@ namespace ArcGISRuntime.Samples.Desktop
 					var point = await MyMapView.Editor.RequestPointAsync();
 
 					var symbol = _symbols[symbolCombo.SelectedIndex];
+					graphicsOverlay3d.Graphics.Add(new Graphic(point, symbol));
 					graphicsOverlay.Graphics.Add(new Graphic(point, symbol));
 				}
 			}

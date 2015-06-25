@@ -39,6 +39,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			try
 			{
 				MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+				MySceneView.SetView(new Viewpoint(MyMapView.Extent));
 				await LoadStatesAsync();
 
 				ChangeRenderer();
@@ -71,6 +72,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				}));
 
 			_states.Renderer = renderer;
+			var layer = MySceneView.GraphicsOverlays["states"];
+			layer.Renderer = renderer;
 		}
 
 		// Load US state data from map service
@@ -94,6 +97,9 @@ namespace ArcGISRuntime.Samples.Desktop
 
 			_states.Graphics.Clear();
 			_states.Graphics.AddRange(result.FeatureSet.Features.OfType<Graphic>());
+			var layer = MySceneView.GraphicsOverlays["states"];
+			layer.Graphics.Clear();
+			layer.Graphics.AddRange(result.FeatureSet.Features.OfType<Graphic>());
 		}
 
 		// Utility: Generate a random simple fill symbol
