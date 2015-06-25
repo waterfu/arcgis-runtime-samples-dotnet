@@ -23,6 +23,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public ReverseGeocode()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-117.387, 33.97, -117.355, 33.988, SpatialReferences.Wgs84)));
             _locator = new OnlineLocatorTask(new Uri("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"));
         }
 

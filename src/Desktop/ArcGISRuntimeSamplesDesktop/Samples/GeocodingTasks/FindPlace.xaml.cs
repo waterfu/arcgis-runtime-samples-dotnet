@@ -28,7 +28,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public FindPlace()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(MapExtent));
 			_addressOverlay = MyMapView.GraphicsOverlays["AddressOverlay"];
 
 			_locatorTask = new OnlineLocatorTask(new Uri(OnlineLocatorUrl));
@@ -39,12 +39,13 @@ namespace ArcGISRuntime.Samples.Desktop
 			SetSimpleRendererSymbols();
 		}
 
+		private Envelope MapExtent = new Envelope(-117.207, 32.686, -117.079, 32.739, SpatialReferences.Wgs84);
 		// Setup the pin graphic and graphics overlay renderer
 		private async void SetSimpleRendererSymbols()
 		{
 			try
 			{
-				var markerSymbol = new PictureMarkerSymbol() { Width = 48, Height = 48, YOffset = 24 };
+				var markerSymbol = new PictureMarkerSymbol();// { Width = 48, Height = 48, YOffset = 24 };
 				await markerSymbol.SetSourceAsync(new Uri("pack://application:,,,/ArcGISRuntimeSamplesDesktop;component/Assets/RedStickpin.png"));
 				var renderer = new SimpleRenderer() { Symbol = markerSymbol };
 
@@ -67,14 +68,15 @@ namespace ArcGISRuntime.Samples.Desktop
 
                 // Get current viewpoints extent from the MapView
                 var currentViewpoint = MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry);
-                var viewpointExtent = currentViewpoint.TargetGeometry.Extent;
 
+				var viewpointExtent = MapExtent;//currentViewpoint.TargetGeometry.Extent;
+				viewpointExtent = (Envelope) GeometryEngine.Project(viewpointExtent, SpatialReferences.WebMercator);
 				var param = new OnlineLocatorFindParameters(SearchTextBox.Text)
 				{
 					SearchExtent = viewpointExtent,
 					Location = viewpointExtent.GetCenter(),
 					MaxLocations = 5,
-					OutSpatialReference = MyMapView.SpatialReference,
+					OutSpatialReference = viewpointExtent.SpatialReference,
 					OutFields = new string[] { "Place_addr" }
 				};
 
@@ -87,7 +89,7 @@ namespace ArcGISRuntime.Samples.Desktop
 					AddGraphicFromLocatorCandidate(candidate);
 
 				var extent = GeometryEngine.Union(_addressOverlay.Graphics.Select(g => g.Geometry)).Extent.Expand(1.1);
-				await MyMapView.SetViewAsync(extent);
+				await MyMapView.SetViewAsync(new Viewpoint(extent));
 
 				listResults.Visibility = Visibility.Visible;
 			}

@@ -29,7 +29,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public GeocodeAddress()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(MapExtent));
 			_addressOverlay = MyMapView.GraphicsOverlays["AddressOverlay"];
 			_locatorTask = new OnlineLocatorTask(new Uri(OnlineLocatorUrl));
 			_locatorTask.AutoNormalize = true;
@@ -37,12 +37,13 @@ namespace ArcGISRuntime.Samples.Desktop
 			SetSimpleRendererSymbols();
 		}
 
+		private Envelope MapExtent = new Envelope(-122.554, 37.615, -122.245, 37.884, SpatialReferences.Wgs84);
 		// Setup the pin graphic and graphics overlay renderer
 		private async void SetSimpleRendererSymbols()
 		{
 			try
 			{
-				var markerSymbol = new PictureMarkerSymbol() { Width = 48, Height = 48, YOffset = 24 };
+				var markerSymbol = new PictureMarkerSymbol();// { Width = 48, Height = 48, YOffset = 24 };
 				await markerSymbol.SetSourceAsync(new Uri("pack://application:,,,/ArcGISRuntimeSamplesDesktop;component/Assets/RedStickpin.png"));
 				var renderer = new SimpleRenderer() { Symbol = markerSymbol };
 
@@ -79,7 +80,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				listResults.Visibility = Visibility.Visible;
 
 				var extent = GeometryEngine.Union(visibleGraphics.Select(g => g.Geometry)).Extent.Expand(1.2);
-				await MyMapView.SetViewAsync(extent);
+				await MyMapView.SetViewAsync(new Viewpoint(extent));
 			}
 			catch (AggregateException ex)
 			{

@@ -5,9 +5,11 @@ using Esri.ArcGISRuntime.Tasks.Geoprocessing;
 using System;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -29,7 +31,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public ClipFeatures()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-130, 10, -70, 60, SpatialReferences.Wgs84)));
 			_inputOverlay = MyMapView.GraphicsOverlays["inputOverlay"];
 			_resultsOverlay = MyMapView.GraphicsOverlays["resultsOverlay"];
 
@@ -48,12 +50,11 @@ namespace ArcGISRuntime.Samples.Desktop
 				_inputOverlay.Graphics.Clear();
 				_resultsOverlay.Graphics.Clear();
 
-				foreach (var lyr in MyMapView.Map.Layers.OfType<GPResultImageLayer>())
-					MyMapView.Map.Layers.Remove(lyr);
+				foreach (var lyr in MyMapView.Scene.Layers.OfType<GPResultImageLayer>())
+					MyMapView.Scene.Layers.Remove(lyr);
 
 				//get the user's input line
-				var inputLine = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polyline) as Polyline;
-
+				var inputLine = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
 				progress.Visibility = Visibility.Visible;
 				_inputOverlay.Graphics.Add(new Graphic() { Geometry = inputLine });
 
@@ -77,7 +78,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
 							GPResultImageLayer gpImageLayer = resultImageLayer;
 							gpImageLayer.Opacity = 0.5;
-							MyMapView.Map.Layers.Add(gpImageLayer);
+							MyMapView.Scene.Layers.Add(gpImageLayer);
 							txtStatus.Text = "Greater than 500 features returned.  Results drawn using map service.";
 							return;
 						}
