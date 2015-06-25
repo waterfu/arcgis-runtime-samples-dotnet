@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -25,7 +26,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public MarkerSymbols()
 		{
 			InitializeComponent();
-
+			MySceneView.SetView(MyMapView.Map.InitialViewpoint);
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
 
 			MyMapView.ExtentChanged += MyMapView_ExtentChanged;
@@ -48,6 +49,8 @@ namespace ArcGISRuntime.Samples.Desktop
 			while (MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry).TargetGeometry.Extent != null)
 			{
 				var point = await MyMapView.Editor.RequestPointAsync();
+				var layer = MySceneView.GraphicsOverlays["graphicsOverlay"];
+				layer.Graphics.Add(new Graphic(point, _symbols[symbolCombo.SelectedIndex]));
 				_graphicsOverlay.Graphics.Add(new Graphic(point, _symbols[symbolCombo.SelectedIndex]));
 			}
 		}

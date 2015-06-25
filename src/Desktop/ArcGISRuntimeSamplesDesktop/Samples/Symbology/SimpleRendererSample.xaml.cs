@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -23,7 +24,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public SimpleRendererSample()
 		{
 			InitializeComponent();
-
+			MySceneView.SetView(MyMapView.Map.InitialViewpoint);
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
 
 			MyMapView.ExtentChanged += MyMapView_ExtentChanged;
@@ -39,6 +40,8 @@ namespace ArcGISRuntime.Samples.Desktop
 		// Change the graphics layer renderer to a new SimpleRenderer
 		private void ChangeRendererButton_Click(object sender, RoutedEventArgs e)
 		{
+			var layer = MySceneView.GraphicsOverlays["graphicsOverlay"];
+			layer.Renderer = new SimpleRenderer() { Symbol = GetRandomSymbol() };
 			_graphicsOverlay.Renderer = new SimpleRenderer() { Symbol = GetRandomSymbol() };
 		}
 
@@ -50,6 +53,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				while (MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry).TargetGeometry.Extent != null)
 				{
 					var point = await MyMapView.Editor.RequestPointAsync();
+					var layer = MySceneView.GraphicsOverlays["graphicsOverlay"];
+					layer.Graphics.Add(new Graphic(point));
 					_graphicsOverlay.Graphics.Add(new Graphic(point));
 				}
 			}
