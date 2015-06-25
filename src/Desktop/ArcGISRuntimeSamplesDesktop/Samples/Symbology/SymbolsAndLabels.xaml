@@ -60,12 +60,12 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<esri:MapView x:Name="MyMapView">
-			<esri:Map>
+		<esri:SceneView x:Name="MyMapView">
+			<esri:Scene>
 				<esri:ArcGISTiledMapServiceLayer
 					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="labelGraphicsOverlay">
 					<esri:GraphicsOverlay.Labeling>
 						<esri:LabelProperties IsEnabled="False">
@@ -78,9 +78,9 @@
 						</esri:LabelProperties>
 					</esri:GraphicsOverlay.Labeling>
 				</esri:GraphicsOverlay>
-			</esri:MapView.GraphicsOverlays>
+			</esri:SceneView.GraphicsOverlays>
 
-		</esri:MapView>
+		</esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="30" Padding="20"
 				HorizontalAlignment="Right" VerticalAlignment="Top">

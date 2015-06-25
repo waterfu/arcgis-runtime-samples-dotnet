@@ -27,12 +27,12 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			var gOverlay = MyMapView.GraphicsOverlays["labelGraphicsOverlay"];
 
-			gOverlay.Graphics.Add(new Graphic(new MapPoint(-6000000, 4800000), (Symbol)Resources["NumberedMarkerSymbol1"]));
-			gOverlay.Graphics.Add(new Graphic(new MapPoint(-5000000, 3900000), (Symbol)Resources["NumberedMarkerSymbolA"]));
-			gOverlay.Graphics.Add(new Graphic(new MapPoint(-4000000, 4800000), (Symbol)Resources["NumberedMarkerSymbol1"]));
-			gOverlay.Graphics.Add(new Graphic(new MapPoint(-3000000, 3900000), (Symbol)Resources["NumberedMarkerSymbolA"]));
-			gOverlay.Graphics.Add(new Graphic(new MapPoint(-2000000, 4800000), (Symbol)Resources["NumberedMarkerSymbol1"]));
-			gOverlay.Graphics.Add(new Graphic(new MapPoint(-1000000, 3900000), (Symbol)Resources["NumberedMarkerSymbolA"]));
+			gOverlay.Graphics.Add(new Graphic(new MapPoint(-6000000, 4800000, SpatialReferences.WebMercator), (Symbol)Resources["NumberedMarkerSymbol1"]));
+			gOverlay.Graphics.Add(new Graphic(new MapPoint(-5000000, 3900000, SpatialReferences.WebMercator), (Symbol)Resources["NumberedMarkerSymbolA"]));
+			gOverlay.Graphics.Add(new Graphic(new MapPoint(-4000000, 4800000, SpatialReferences.WebMercator), (Symbol)Resources["NumberedMarkerSymbol1"]));
+			gOverlay.Graphics.Add(new Graphic(new MapPoint(-3000000, 3900000, SpatialReferences.WebMercator), (Symbol)Resources["NumberedMarkerSymbolA"]));
+			gOverlay.Graphics.Add(new Graphic(new MapPoint(-2000000, 4800000, SpatialReferences.WebMercator), (Symbol)Resources["NumberedMarkerSymbol1"]));
+			gOverlay.Graphics.Add(new Graphic(new MapPoint(-1000000, 3900000, SpatialReferences.WebMercator), (Symbol)Resources["NumberedMarkerSymbolA"]));
 
 			int i = 0;
 			foreach (var g in gOverlay.Graphics)
@@ -66,7 +66,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			double x = -7000000;
 			foreach (var symbol in symbols)
 			{
-				Graphic g = new Graphic(new MapPoint(x, 3900000), symbol);
+				Graphic g = new Graphic(new MapPoint(x, 3900000, SpatialReferences.WebMercator), symbol);
 				gOverlay.Graphics.Add(g);
 				x += 1000000;
 			}
@@ -85,7 +85,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
 		private void Slider_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
 		{
-			MyMapView.SetRotationAsync(e.NewValue);
+			//MyMapView.SetRotationAsync(e.NewValue);
 		}
 	}
 }
