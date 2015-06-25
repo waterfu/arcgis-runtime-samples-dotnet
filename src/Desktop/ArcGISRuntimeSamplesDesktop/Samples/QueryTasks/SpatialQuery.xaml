@@ -22,17 +22,17 @@
             <esri:SimpleRenderer x:Key="ParcelRenderer" Symbol="{StaticResource ParcelSymbol}" />
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" WrapAround="True" MapViewTapped="MyMapView_MapViewTapped">
-			<esri:Map InitialViewpoint="-9270434,5246977,-9269261,5247570">
+        <esri:SceneView x:Name="MyMapView" SceneViewTapped="MyMapView_MapViewTapped">
+			<esri:Scene>
 				<esri:ArcGISTiledMapServiceLayer 
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="parcelOverlay" RenderingMode="Static" Renderer="{StaticResource ParcelRenderer}"/>
 				<esri:GraphicsOverlay ID="bufferOverlay" Renderer="{StaticResource BufferRenderer}"/>
 				<esri:GraphicsOverlay ID="graphicsOverlay" Renderer="{StaticResource DefaultRenderer}"/>
-			</esri:MapView.GraphicsOverlays>
-        </esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+        </esri:SceneView>
 
         <Border Background="White" BorderBrush="Black" BorderThickness="1" 
 				Margin="30" Padding="20"

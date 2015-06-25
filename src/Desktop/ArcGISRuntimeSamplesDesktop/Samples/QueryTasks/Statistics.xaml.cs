@@ -28,7 +28,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public Statistics()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-14675766.357, 2695407.734, -6733121.861, 6583994.101, SpatialReferences.WebMercator)));
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
 
 			MyMapView.NavigationCompleted += MyMapView_NavigationCompleted;

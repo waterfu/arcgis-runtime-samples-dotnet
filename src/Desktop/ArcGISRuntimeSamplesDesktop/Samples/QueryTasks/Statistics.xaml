@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid x:Name="layoutGrid">
-        <esri:MapView x:Name="MyMapView" WrapAround="True">
-            <esri:Map InitialViewpoint="-14675766.357,2695407.734,-6733121.861,6583994.101,102100">
+        <esri:SceneView x:Name="MyMapView" >
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer 
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+			<esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="graphicsOverlay" />
-			</esri:MapView.GraphicsOverlays>
-        </esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+        </esri:SceneView>
 
         <Border Background="White" BorderBrush="Black" BorderThickness="1"
 				Margin="30" Padding="20" Width="300"

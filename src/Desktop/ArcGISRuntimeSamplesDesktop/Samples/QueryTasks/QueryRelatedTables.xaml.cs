@@ -24,7 +24,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public QueryRelatedTables()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-10854000, 4502000, -10829000, 4524000, SpatialReferences.WebMercator)));
 			_wellsOverlay = MyMapView.GraphicsOverlays["wellsOverlay"];               
 		}
 

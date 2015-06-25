@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -22,7 +23,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public SpatialQuery()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-9270434, 5246977, -9269261, 5247570, SpatialReferences.WebMercator)));
             InitializePictureMarkerSymbol();
         }
 
@@ -48,14 +49,14 @@ namespace ArcGISRuntime.Samples.Desktop
                 var graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
                 if (!(graphicsOverlay.Graphics.Count == 0))
                     graphicsOverlay.Graphics.Clear();
-
-                graphicsOverlay.Graphics.Add(new Graphic() { Geometry = e.Location });
+	            var location = GeometryEngine.Project(e.Location, SpatialReferences.WebMercator);
+                graphicsOverlay.Graphics.Add(new Graphic() { Geometry =location });
 
                 var bufferOverlay = MyMapView.GraphicsOverlays["bufferOverlay"];
                 if (!(bufferOverlay.Graphics.Count == 0))
                     bufferOverlay.Graphics.Clear();
 
-                var bufferResult = GeometryEngine.Buffer(e.Location, 100);
+                var bufferResult = GeometryEngine.Buffer(location, 100);
                 bufferOverlay.Graphics.Add(new Graphic() { Geometry = bufferResult });
 
                 var queryTask = new QueryTask(

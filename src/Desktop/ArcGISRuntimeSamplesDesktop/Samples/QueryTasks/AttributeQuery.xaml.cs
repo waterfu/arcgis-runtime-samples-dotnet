@@ -23,7 +23,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public AttributeQuery()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-15000000, 2000000, -7000000, 8000000, SpatialReferences.WebMercator)));
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
 			InitializeComboBox();
         }
@@ -79,7 +79,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
                     var selectedFeatureExtent = graphic.Geometry.Extent;
                     Envelope displayExtent = selectedFeatureExtent.Expand(1.3);
-                    MyMapView.SetView(displayExtent);
+	                MyMapView.SetView(new Viewpoint(displayExtent));
 
                     resultsGrid.ItemsSource = graphic.Attributes;
                     resultsGrid.Visibility = Visibility.Visible;

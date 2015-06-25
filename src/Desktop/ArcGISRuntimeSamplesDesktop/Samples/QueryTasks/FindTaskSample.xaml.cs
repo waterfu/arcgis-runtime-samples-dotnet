@@ -28,6 +28,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public FindTaskSample()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-14675766.357, 2695407.734, -6733121.861, 6583994.101, SpatialReferences.WebMercator)));
             _markerSymbol = layoutGrid.Resources["MarkerSymbol"] as Symbol;
             _lineSymbol = layoutGrid.Resources["LineSymbol"] as Symbol;
             _fillSymbol = layoutGrid.Resources["FillSymbol"] as Symbol;

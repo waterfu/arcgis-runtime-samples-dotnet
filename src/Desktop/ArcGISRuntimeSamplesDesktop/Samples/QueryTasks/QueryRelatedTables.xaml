@@ -8,17 +8,17 @@
             <esri:SimpleRenderer x:Key="SimpleRenderer" Symbol="{StaticResource DefaultMarkerSymbol}" />
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" MapViewTapped="MyMapView_MapViewTapped">
-			<esri:Map InitialViewpoint="-10854000, 4502000, -10829000, 4524000, 3857">
+        <esri:SceneView x:Name="MyMapView" SceneViewTapped="MyMapView_MapViewTapped">
+			<esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer 
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer" />
                 <esri:ArcGISDynamicMapServiceLayer
                     ServiceUri="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSPetro/MapServer" />
-            </esri:Map>
-			<esri:MapView.GraphicsOverlays>
+            </esri:Scene>
+			<esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="wellsOverlay" Renderer="{StaticResource SimpleRenderer}" />
-			</esri:MapView.GraphicsOverlays>
-        </esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+        </esri:SceneView>
 
 		<Border x:Name="resultsPanel" Margin="5" Padding="5"
                 Background="#77919191" BorderBrush="Black" BorderThickness="1" 

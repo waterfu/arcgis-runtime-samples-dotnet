@@ -4,6 +4,7 @@ using Esri.ArcGISRuntime.Tasks.Query;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -19,6 +20,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public IdentifySample()
 		{
 			InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-15000000, 2000000, -7000000, 8000000, SpatialReferences.WebMercator)));
 		}
 
 		// Identify features at the click point
