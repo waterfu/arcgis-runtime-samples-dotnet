@@ -8,8 +8,8 @@
             <esri:SimpleRenderer x:Key="AOIRenderer" Symbol="{StaticResource AOISymbol}" />
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView">
-			<esri:Map InitialViewpoint="-13644594, 4538221, -13614635, 4552889, 102100">
+        <esri:SceneView x:Name="MyMapView">
+			<esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer DisplayName="Streets Basemap"
                     ServiceUri="http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
@@ -29,8 +29,8 @@
                     </esri:FeatureLayer>
                 </esri:GroupLayer>                                                
                               
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
 		<Border x:Name="panelUI"
 				Background="White" BorderBrush="Black" BorderThickness="1"
@@ -49,7 +49,7 @@
                 </StackPanel>
 
                 <TextBlock Text="Map Layers" FontSize="14" FontWeight="Bold" Margin="0,12,0,6" HorizontalAlignment="Center" />
-                <TreeView Grid.Row="1" ItemsSource="{Binding ElementName=MyMapView, Path=Map.Layers}" Margin="12,0">
+                <TreeView Grid.Row="1" ItemsSource="{Binding ElementName=MyMapView, Path=Scene.Layers}" Margin="12,0">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="TreeViewItem">
                             <Setter Property="TreeViewItem.IsExpanded" Value="True" />

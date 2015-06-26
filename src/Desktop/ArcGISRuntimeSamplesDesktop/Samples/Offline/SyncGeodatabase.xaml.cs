@@ -120,9 +120,9 @@ namespace ArcGISRuntime.Samples.Desktop
 		public SyncGeodatabase()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-13446093, 4183762, -13432118, 4190880, SpatialReferences.WebMercator)));
 			_syncTask = new GeodatabaseSyncTask(new Uri(BASE_URL));
-			_onlineBirdsLayer = MyMapView.Map.Layers.OfType<ArcGISDynamicMapServiceLayer>().First();
+			_onlineBirdsLayer = MyMapView.Scene.Layers.OfType<ArcGISDynamicMapServiceLayer>().First();
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
 			_localBirdsLayer = null;
 			CanGenerate = true;
@@ -292,7 +292,7 @@ namespace ArcGISRuntime.Samples.Desktop
 					var gdbTable = LocalBirdsLayer.FeatureTable as GeodatabaseFeatureTable;
 					await _syncTask.UnregisterGeodatabaseAsync(gdbTable.Geodatabase);
 
-					MyMapView.Map.Layers.Remove(LocalBirdsLayer);
+					MyMapView.Scene.Layers.Remove(LocalBirdsLayer);
 					LocalBirdFeatures = null;
 					LocalBirdsLayer = null;
 				}
@@ -319,7 +319,9 @@ namespace ArcGISRuntime.Samples.Desktop
 					throw new ApplicationException("No local geodatabase to edit.");
 
 				_graphicsOverlay.Graphics.Clear();
-				_graphicsOverlay.Graphics.Add(new Graphic(e.Location));
+				var mp = e.Location;
+				mp = new MapPoint(mp.X, mp.Y, mp.SpatialReference);
+				_graphicsOverlay.Graphics.Add(new Graphic(mp));
 
 				TapLocation = e.Location;
 				IsEditing = true;
@@ -340,7 +342,9 @@ namespace ArcGISRuntime.Samples.Desktop
 					throw new ApplicationException("Birds table was not found in the local geodatabase.");
 
 				var bird = new GeodatabaseFeature(birdsTable.Schema);
-				bird.Geometry = TapLocation;
+				var mp = TapLocation;
+				mp = new MapPoint(mp.X, mp.Y, mp.SpatialReference);
+				bird.Geometry = mp;
 
 				if (bird.Schema.Fields.Any(fld => fld.Name == "type"))
 					bird.Attributes["type"] = comboBirdType.SelectedValue;
@@ -418,7 +422,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				throw new ApplicationException("Downloaded geodatabase has no feature tables.");
 
 			if (LocalBirdsLayer != null)
-				MyMapView.Map.Layers.Remove(LocalBirdsLayer);
+				MyMapView.Scene.Layers.Remove(LocalBirdsLayer);
 
 			var birdsTable = gdb.FeatureTables.First();
 			LocalBirdsLayer = new FeatureLayer()
@@ -427,9 +431,9 @@ namespace ArcGISRuntime.Samples.Desktop
 				DisplayName = "Local Birds",
 				FeatureTable = birdsTable
 			};
-			MyMapView.Map.Layers.Insert(2, LocalBirdsLayer);
+			MyMapView.Scene.Layers.Insert(2, LocalBirdsLayer);
 
-			await MyMapView.SetViewAsync(birdsTable.Extent);
+			await MyMapView.SetViewAsync(new Viewpoint(birdsTable.Extent));
 		}
 
 		// Update the UI grid with bird data queried from local gdb

@@ -13,16 +13,16 @@
             </Style>
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" MapViewTapped="MyMapView_MapViewTapped">
-            <esri:Map InitialViewpoint="-13446093,4183762,-13432118,4190880,3857">
+        <esri:SceneView x:Name="MyMapView" SceneViewTapped="MyMapView_MapViewTapped">
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer DisplayName="Streets Basemap"
                     ServiceUri="http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
                 <esri:ArcGISDynamicMapServiceLayer ID="onlineBirdsLayer" DisplayName="Online Birds" VisibleLayers="1"
                     ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/SaveTheBaySync/MapServer" />
-            </esri:Map>
+            </esri:Scene>
 
-            <esri:MapView.GraphicsOverlays>
+            <esri:SceneView.GraphicsOverlays>
                 <esri:GraphicsOverlay ID="graphicsOverlay">
                     <esri:GraphicsOverlay.Renderer>
                         <esri:SimpleRenderer>
@@ -30,9 +30,9 @@
                         </esri:SimpleRenderer>
                     </esri:GraphicsOverlay.Renderer>
                 </esri:GraphicsOverlay>
-            </esri:MapView.GraphicsOverlays>
+            </esri:SceneView.GraphicsOverlays>
 
-            <esri:MapView.Overlays>
+            <esri:SceneView.Overlays>
                 <esri:OverlayItemsControl>
                     <Border x:Name="birdSightingOverlay" Background="Beige" BorderBrush="Black" BorderThickness="2" CornerRadius="10"
                         Padding="12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="250" Height="200"
@@ -68,8 +68,8 @@
                         </Grid>
                     </Border>
                 </esri:OverlayItemsControl>
-            </esri:MapView.Overlays>
-        </esri:MapView>
+            </esri:SceneView.Overlays>
+        </esri:SceneView>
 
         <Border x:Name="panelEdit" Background="White" BorderBrush="Black" 
 				BorderThickness="1" MaxHeight="250"
@@ -112,7 +112,7 @@
             <StackPanel>
                 <StackPanel>
                     <TextBlock Text="Current Map Layers" FontSize="16" FontWeight="Bold" Margin="0,0,0,6" />
-                    <ListView Grid.Row="1" ItemsSource="{Binding ElementName=MyMapView, Path=Map.Layers}" Margin="12,0" 
+                    <ListView Grid.Row="1" ItemsSource="{Binding ElementName=MyMapView, Path=Scene.Layers}" Margin="12,0" 
                           BorderBrush="Transparent">
                         <ListView.Resources>
                             <DataTemplate DataType="{x:Type esri:Layer}">

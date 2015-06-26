@@ -3,16 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid Background="White">
-        <esri:MapView x:Name="MyMapView" WrapAround="True" Grid.Row="0">
-			<esri:Map InitialViewpoint="-13044000, 3855000, -13040000, 3858000, 102100">
+        <esri:SceneView x:Name="MyMapView" Grid.Row="0">
+			<esri:Scene >
                 <!-- Replace with local basemap for offline use (ArcGISLocalTiledLayer) -->
 				<esri:ArcGISTiledMapServiceLayer 
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="graphicsOverlay" />
-			</esri:MapView.GraphicsOverlays>
-        </esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+        </esri:SceneView>
 
 		<Border x:Name="panelEdit"
 				Background="White" BorderBrush="Black" BorderThickness="1"

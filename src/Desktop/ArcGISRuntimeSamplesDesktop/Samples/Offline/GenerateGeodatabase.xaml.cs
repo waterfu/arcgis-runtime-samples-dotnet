@@ -27,6 +27,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public GenerateGeodatabase()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-13644594, 4538221, -13614635, 4552889, SpatialReferences.WebMercator)));
         }
 
         // Generate / download and display layers from a generated geodatabase
@@ -76,7 +77,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 ReportStatus("Create local feature layers...");
                 await CreateFeatureLayersAsync(gdbPath);
 
-                MyMapView.Map.Layers["wildfireGroup"].IsVisible = false;
+                MyMapView.Scene.Layers["wildfireGroup"].IsVisible = false;
             }
             catch (Exception ex)
             {
@@ -121,9 +122,9 @@ namespace ArcGISRuntime.Samples.Desktop
                 if (gdb.FeatureTables.Count() == 0)
                     throw new ApplicationException("Downloaded geodatabase has no feature tables.");
 
-                var groupLayer = MyMapView.Map.Layers["Local_Geodatabase"] as GroupLayer;
+                var groupLayer = MyMapView.Scene.Layers["Local_Geodatabase"] as GroupLayer;
                 if (groupLayer != null)
-                    MyMapView.Map.Layers.Remove(groupLayer);
+                    MyMapView.Scene.Layers.Remove(groupLayer);
 
                 groupLayer = new GroupLayer()
                 {
@@ -154,9 +155,9 @@ namespace ArcGISRuntime.Samples.Desktop
                     groupLayer.ChildLayers.Add(flayer);
                 }
 
-                MyMapView.Map.Layers.Add(groupLayer);
+                MyMapView.Scene.Layers.Add(groupLayer);
 
-                await MyMapView.SetViewAsync(extent.Expand(1.10));
+                await MyMapView.SetViewAsync(new Viewpoint(extent.Expand(1.10)));
             }
             catch (Exception ex)
             {

@@ -29,7 +29,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public OfflineGeocoding()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-13044000, 3855000, -13040000, 3858000, SpatialReferences.WebMercator)));
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
 			SetupRendererSymbols();
 		}
@@ -39,7 +39,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			try
 			{
-				var markerSymbol = new PictureMarkerSymbol() { Width = 48, Height = 48, YOffset = 24 };
+				var markerSymbol = new PictureMarkerSymbol();//{ Width = 48, Height = 48, YOffset = 24 };
 				await markerSymbol.SetSourceAsync(
 					new Uri("pack://application:,,,/ArcGISRuntimeSamplesDesktop;component/Assets/RedStickpin.png"));
 				_graphicsOverlay.Renderer = new SimpleRenderer() { Symbol = markerSymbol, };
@@ -79,7 +79,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				_graphicsOverlay.GraphicsSource = candidateResults
 					.Select(result => new Graphic(result.Location, new Dictionary<string, object> { { "Locator", result } }));
 
-				await MyMapView.SetViewAsync(ExtentFromGraphics().Expand(2));
+				await MyMapView.SetViewAsync(new Viewpoint(ExtentFromGraphics().Expand(2)));
 			}
 			catch (AggregateException ex)
 			{

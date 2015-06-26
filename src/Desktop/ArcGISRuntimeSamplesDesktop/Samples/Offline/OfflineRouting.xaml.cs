@@ -32,14 +32,14 @@ namespace ArcGISRuntime.Samples.Desktop
         public OfflineRouting()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-13044000, 3855000, -13040000, 3858000, SpatialReferences.WebMercator)));
             _isMapReady = false;
             _directionPointSymbol = layoutGrid.Resources["directionPointSymbol"] as Symbol;
 			_stopsOverlay = MyMapView.GraphicsOverlays["stopsOverlay"];
 			_routesOverlay = MyMapView.GraphicsOverlays["routesOverlay"];
 			_directionsOverlay = MyMapView.GraphicsOverlays["directionsOverlay"];
 
-            MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+            MyMapView.CameraChanged += MyMapView_ExtentChanged;
         }
 
         // Make sure the map is ready for user interaction
@@ -47,7 +47,7 @@ namespace ArcGISRuntime.Samples.Desktop
         {
             try
             {
-                MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+                MyMapView.CameraChanged -= MyMapView_ExtentChanged;
 
                 await MyMapView.LayersLoadedAsync();
                 _isMapReady = true;
@@ -121,7 +121,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 var totalLength = route.RouteDirections.Select(rd => rd.GetLength(LinearUnits.Miles)).Sum();
                 txtRouteTotals.Text = string.Format("Time: {0:h':'mm':'ss} / Length: {1:0.00} mi", totalTime, totalLength);
 
-                await MyMapView.SetViewAsync(route.RouteFeature.Geometry.Extent.Expand(1.2));
+	            await MyMapView.SetViewAsync(new Viewpoint(route.RouteFeature.Geometry.Extent.Expand(1.2)));
             }
             catch (AggregateException ex)
             {
