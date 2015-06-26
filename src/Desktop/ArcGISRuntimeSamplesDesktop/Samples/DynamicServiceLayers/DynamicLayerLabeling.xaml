@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid>
-		<esri:MapView x:Name="MyMapView" WrapAround="True">
-            <esri:Map InitialViewpoint="-14675766.357,2695407.734,-6733121.861,6583994.101,102100">
+		<esri:SceneView x:Name="MyMapView" >
+            <esri:Scene >
                 <esri:ArcGISDynamicMapServiceLayer x:Name="dynamicLayer" ID="USA"
 				    ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer"
                     VisibleLayers="0,1,2">
@@ -29,7 +29,7 @@
                     </esri:ArcGISDynamicMapServiceLayer.LayerDrawingOptions>
                     
                 </esri:ArcGISDynamicMapServiceLayer>
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
     </Grid>
 </UserControl>

@@ -60,7 +60,7 @@ namespace ArcGISRuntime.Samples.Desktop.DynamicLayers
                     if (dynLayer != null)
                     {
                         dynLayer.DisplayName = dynLayer.DynamicLayerInfos[0].Name;
-                        MyMapView.Map.Layers.Add(dynLayer);
+                        MyMapView.Scene.Layers.Add(dynLayer);
                         progress.Visibility = Visibility.Collapsed;
                     }
                 }
@@ -91,7 +91,7 @@ namespace ArcGISRuntime.Samples.Desktop.DynamicLayers
                     if (dynLayer != null)
                     {
                         dynLayer.DisplayName = dynLayer.DynamicLayerInfos[0].Name;
-                        MyMapView.Map.Layers.Add(dynLayer);
+                        MyMapView.Scene.Layers.Add(dynLayer);
                         progress.Visibility = Visibility.Collapsed;
                     }
                 }

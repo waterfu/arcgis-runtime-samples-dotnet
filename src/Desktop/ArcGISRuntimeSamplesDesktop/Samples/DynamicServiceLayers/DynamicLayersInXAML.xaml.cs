@@ -17,9 +17,9 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			InitializeComponent();
 
-			MyMapView.Map.InitialViewpoint = new Viewpoint(new Envelope(-3170138, -1823795, 2850785, 1766663, SpatialReference.Create(102009)));
+			MyMapView.SetView(new Viewpoint(new Envelope(-3170138, -1823795, 2850785, 1766663, SpatialReference.Create(102009))));
 
-			(MyMapView.Map.Layers["USA"] as ArcGISDynamicMapServiceLayer).VisibleLayers = new System.Collections.ObjectModel.ObservableCollection<int> { 0, 2, 4 };
+			(MyMapView.Scene.Layers["USA"] as ArcGISDynamicMapServiceLayer).VisibleLayers = new System.Collections.ObjectModel.ObservableCollection<int> { 0, 2, 4 };
 
 		}
 	}

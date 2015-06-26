@@ -37,7 +37,7 @@ namespace ArcGISRuntime.Samples.Desktop
                     ServiceUri = localMapService.UrlMapService,
                 };
 
-				MyMapView.Map.Layers.Add(arcGISDynamicMapServiceLayer);
+				MyMapView.Scene.Layers.Add(arcGISDynamicMapServiceLayer);
             }
             catch (Exception ex)
             {

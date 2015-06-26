@@ -7,13 +7,13 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         </Grid.Resources>
 
-		<esri:MapView x:Name="MyMapView" WrapAround="True">
-            <esri:Map x:Name="map" InitialViewpoint="-14675766.357,2695407.734,-6733121.861,6583994.101,102100">
+		<esri:SceneView x:Name="MyMapView">
+            <esri:Scene x:Name="map" >
                 <esri:ArcGISDynamicMapServiceLayer x:Name="censusLayer" ID="USA"
 				    ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
                     VisibleLayers="2" />
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Right" VerticalAlignment="Top" 

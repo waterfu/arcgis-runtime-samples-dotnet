@@ -19,8 +19,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public Stretch()
 		{
 			InitializeComponent();
-			MyMapView.Map.InitialViewpoint = 
-				new Viewpoint(new Envelope(-8844874, 5401062, -8828990, 5420947, SpatialReference.Create(3857)));
+			MyMapView.SetView(new Viewpoint(new Envelope(-8844874, 5401062, -8828990, 5420947, SpatialReference.Create(3857))));
 
 		}
 
@@ -28,7 +27,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			try
 			{
-				ArcGISImageServiceLayer imageLayer = MyMapView.Map.Layers["ImageServiceLayer"] as ArcGISImageServiceLayer;
+				ArcGISImageServiceLayer imageLayer = MyMapView.Scene.Layers["ImageServiceLayer"] as ArcGISImageServiceLayer;
 				RenderingRule renderingRule = new RenderingRule();
 				renderingRule.VariableName = "Raster";
 

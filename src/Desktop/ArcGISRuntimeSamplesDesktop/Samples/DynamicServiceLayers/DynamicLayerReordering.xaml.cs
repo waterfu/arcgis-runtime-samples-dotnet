@@ -1,5 +1,6 @@
 ﻿using Esri.ArcGISRuntime.Geometry;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -14,7 +15,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public DynamicLayerReordering()
         {
             InitializeComponent();
-			MyMapView.Map.SpatialReference = SpatialReferences.WebMercator;
+			MyMapView.SetView(new Viewpoint(new Envelope(-14675766.357, 2695407.734, -6733121.861, 6583994.101, SpatialReferences.WebMercator)));
         }
 
         private void ChangeLayerOrderClick(object sender, System.Windows.RoutedEventArgs e)

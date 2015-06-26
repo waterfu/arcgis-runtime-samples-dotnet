@@ -2,6 +2,7 @@
 using Esri.ArcGISRuntime.Geometry;
 using Esri.ArcGISRuntime.Layers;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -17,13 +18,13 @@ namespace ArcGISRuntime.Samples.Desktop
         {
             InitializeComponent();
 
-			MyMapView.Map.SpatialReference = SpatialReference.Create(2264);
+			MyMapView.SetView(new Viewpoint(new Envelope(1445440,540657,1452348,544407,new SpatialReference(2264))));
 			MyMapView.LayerLoaded += MyMapView_LayerLoaded;
         }
 
         private void RasterFunctionsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-			ArcGISImageServiceLayer imageLayer = MyMapView.Map.Layers["ImageLayer"] as ArcGISImageServiceLayer;
+			ArcGISImageServiceLayer imageLayer = MyMapView.Scene.Layers["ImageLayer"] as ArcGISImageServiceLayer;
             var rasterFunction = (sender as ComboBox).SelectedItem as RasterFunctionInfo;
             if (rasterFunction != null)
             {

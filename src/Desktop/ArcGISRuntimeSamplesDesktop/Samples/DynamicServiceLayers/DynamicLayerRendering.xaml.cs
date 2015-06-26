@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Esri.ArcGISRuntime.Controls;
 
 namespace ArcGISRuntime.Samples.Desktop.DynamicLayers
 {
@@ -47,8 +48,7 @@ namespace ArcGISRuntime.Samples.Desktop.DynamicLayers
 
             DataContext = this;
             IsBusy = false;
-
-			MyMapView.Map.SpatialReference = SpatialReferences.WebMercator;
+			MyMapView.SetView(new Viewpoint(new Envelope(-14675766.357,2695407.734,-6733121.861,6583994.101,SpatialReferences.WebMercator)));
 
             // Create GenerateRendererTask for a specific map layer
             generateRendererTask = new GenerateRendererTask(new Uri("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2"));

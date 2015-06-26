@@ -8,8 +8,8 @@
 			<esri:SimpleLineSymbol x:Key="SLS" Color="Transparent" Width="1"/>
 			<esri:SimpleLineSymbol x:Key="BlackSLS" Color="Black" Width="1"/>
 		</Grid.Resources>
-		<esri:MapView x:Name="MyMapView">
-			<esri:Map >
+		<esri:SceneView x:Name="MyMapView">
+			<esri:Scene >
 				<esri:ArcGISDynamicMapServiceLayer ID="USA" 
 													 ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer" >
 					<esri:ArcGISDynamicMapServiceLayer.LayerDefinitions>
@@ -90,8 +90,8 @@
 						</esri:DynamicLayerInfoCollection>
 					</esri:ArcGISDynamicMapServiceLayer.DynamicLayerInfos>
 				</esri:ArcGISDynamicMapServiceLayer>
-			</esri:Map>
-		</esri:MapView>
+			</esri:Scene>
+		</esri:SceneView>
 	</Grid>
 
 </UserControl>

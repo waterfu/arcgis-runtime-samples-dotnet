@@ -22,9 +22,9 @@ namespace ArcGISRuntime.Samples.Desktop
 		public ArcGISDynamicMapServiceLayerSample()
 		{
 			InitializeComponent();
-
-			MyMapView.Map.SpatialReference = SpatialReferences.WebMercator;
-			_usaLayer = MyMapView.Map.Layers["USA"] as ArcGISDynamicMapServiceLayer;
+			MyMapView.SetView(new Viewpoint(new Envelope(-14675766.357, 2695407.734, -6733121.861, 6583994.101, SpatialReferences.WebMercator)));
+			
+			_usaLayer = MyMapView.Scene.Layers["USA"] as ArcGISDynamicMapServiceLayer;
 			MyMapView.LayerLoaded += MyMapView_LayerLoaded;
 		}
 

@@ -1,6 +1,7 @@
 ﻿using Esri.ArcGISRuntime.Controls;
 using System.Diagnostics;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop.DynamicLayers
 {
@@ -15,6 +16,8 @@ namespace ArcGISRuntime.Samples.Desktop.DynamicLayers
         public WMSLayer()
         {
             InitializeComponent();
+	        MyMapView.SetView(
+		        new Viewpoint(new Envelope(-15000000, 2000000, -7000000, 8000000, SpatialReferences.WebMercator));
         }
 
 		private void MyMapView_LayerLoaded(object sender, LayerLoadedEventArgs e)

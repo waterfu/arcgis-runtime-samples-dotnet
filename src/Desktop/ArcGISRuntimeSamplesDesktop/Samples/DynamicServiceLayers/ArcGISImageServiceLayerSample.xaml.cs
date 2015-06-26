@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -13,6 +15,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public ArcGISImageServiceLayerSample()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-13486609, 5713307, -13263258, 5823117, SpatialReferences.WebMercator)));
         }
     }
 }
