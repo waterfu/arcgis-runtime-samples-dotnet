@@ -17,7 +17,7 @@ namespace ArcGISRuntime.Samples.Desktop.DynamicLayers
         {
             InitializeComponent();
 	        MyMapView.SetView(
-		        new Viewpoint(new Envelope(-15000000, 2000000, -7000000, 8000000, SpatialReferences.WebMercator));
+		        new Viewpoint(new Envelope(-15000000, 2000000, -7000000, 8000000, SpatialReferences.WebMercator)));
         }
 
 		private void MyMapView_LayerLoaded(object sender, LayerLoadedEventArgs e)

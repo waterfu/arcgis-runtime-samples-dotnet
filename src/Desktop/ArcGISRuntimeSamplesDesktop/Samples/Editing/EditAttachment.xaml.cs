@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -23,6 +24,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public EditAttachment()
 		{
 			InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-122.4406073721, 37.7566097907, -122.4130971868, 37.78197420877, SpatialReferences.Wgs84)));
 		}
 
 		/// <summary>
@@ -30,7 +32,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		/// </summary>
 		private async void MyMapView_MapViewTapped(object sender, MapViewInputEventArgs e)
 		{
-			var layer = MyMapView.Map.Layers["Incidents"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Incidents"] as FeatureLayer;
 			var table = (ArcGISFeatureTable)layer.FeatureTable;
 			layer.ClearSelection();
 			SetAttachmentEditor();
@@ -69,7 +71,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		/// </summary>
 		private async Task SaveEditsAsync()
 		{
-			var layer = MyMapView.Map.Layers["Incidents"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Incidents"] as FeatureLayer;
 			var table = (ArcGISFeatureTable)layer.FeatureTable;
 			if (table.HasEdits)
 			{
@@ -92,7 +94,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		/// </summary>
 		private async Task QueryAttachmentsAsync(long featureID)
 		{
-			var layer = MyMapView.Map.Layers["Incidents"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Incidents"] as FeatureLayer;
 			var table = (ArcGISFeatureTable)layer.FeatureTable;
 			var attachments = await table.QueryAttachmentsAsync(featureID);
 			if (attachments != null)
@@ -124,7 +126,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			try
 			{
 				var featureID = (Int64)AttachmentList.Tag;
-				var layer = MyMapView.Map.Layers["Incidents"] as FeatureLayer;
+				var layer = MyMapView.Scene.Layers["Incidents"] as FeatureLayer;
 				var table = (ArcGISFeatureTable)layer.FeatureTable;
 				var file = GetFile();
 				if (file == null) return;
@@ -186,7 +188,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			var featureID = (Int64)AttachmentList.Tag;
 			var info = (AttachmentInfoItem)((FrameworkElement)sender).DataContext;
-			var layer = MyMapView.Map.Layers["Incidents"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Incidents"] as FeatureLayer;
 			var table = (ArcGISFeatureTable)layer.FeatureTable;
 			var file = GetFile();
 			if (file == null) return;
@@ -221,7 +223,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			var featureID = (Int64)AttachmentList.Tag;
 			var info = (AttachmentInfoItem)((FrameworkElement)sender).DataContext;
-			var layer = MyMapView.Map.Layers["Incidents"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Incidents"] as FeatureLayer;
 			var table = (ArcGISFeatureTable)layer.FeatureTable;
 			string message = null;
 			try

@@ -3,16 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid>
-        <esri:MapView x:Name="MyMapView"
-                      MapViewTapped="MyMapView_MapViewTapped">
-            <esri:Map InitialViewpoint="-122.4406073721, 37.7566097907,-122.4130971868, 37.78197420877,4326">
+        <esri:SceneView x:Name="MyMapView"
+                      SceneViewTapped="MyMapView_MapViewTapped">
+            <esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
                 <!-- Makes all features at current extent available for editing -->
                 <esri:FeatureLayer ID="Incidents">
                     <esri:ServiceFeatureTable ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0" />
                 </esri:FeatureLayer>
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
         <!-- Used for attachment editing -->
         <Border Background="White"
                 BorderBrush="Black"

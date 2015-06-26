@@ -2,10 +2,12 @@
 using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using Esri.ArcGISRuntime.Geometry;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -22,6 +24,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			InitializeComponent();
 
+			MyMapView.SetView(new Viewpoint(new Envelope(-15000000, 2000000, -7000000, 8000000, SpatialReferences.WebMercator)));
 			DrawShapes.ItemsSource = new DrawShape[]
 			{
 				DrawShape.Freehand,
@@ -42,16 +45,16 @@ namespace ArcGISRuntime.Samples.Desktop
 			string message = null;
 			var resultGeometry = _editGraphic == null ? null : _editGraphic.Geometry;
 
-			var editCnfg = MyMapView.Editor.EditorConfiguration;
-			editCnfg.AllowAddVertex = AddVertex.IsChecked.HasValue && AddVertex.IsChecked.Value;
-			editCnfg.AllowDeleteVertex = DeleteVertex.IsChecked.HasValue && DeleteVertex.IsChecked.Value;
-			editCnfg.AllowMoveGeometry = MoveGeometry.IsChecked.HasValue && MoveGeometry.IsChecked.Value;
-			editCnfg.AllowMoveVertex = MoveVertex.IsChecked.HasValue && MoveVertex.IsChecked.Value;
-			editCnfg.AllowRotateGeometry = Rotate.IsChecked.HasValue && Rotate.IsChecked.Value;
-			editCnfg.AllowScaleGeometry = Scale.IsChecked.HasValue && Scale.IsChecked.Value;
-			editCnfg.MaintainAspectRatio = MaintainAspectRatio.IsChecked.HasValue && MaintainAspectRatio.IsChecked.Value;
-			editCnfg.VertexSymbol =
-					new SimpleMarkerSymbol() { Style = SimpleMarkerStyle.Diamond, Color = Colors.Yellow, Size = 15 };
+			//var editCnfg = MyMapView.Editor.EditorConfiguration;
+			//editCnfg.AllowAddVertex = AddVertex.IsChecked.HasValue && AddVertex.IsChecked.Value;
+			//editCnfg.AllowDeleteVertex = DeleteVertex.IsChecked.HasValue && DeleteVertex.IsChecked.Value;
+			//editCnfg.AllowMoveGeometry = MoveGeometry.IsChecked.HasValue && MoveGeometry.IsChecked.Value;
+			//editCnfg.AllowMoveVertex = MoveVertex.IsChecked.HasValue && MoveVertex.IsChecked.Value;
+			//editCnfg.AllowRotateGeometry = Rotate.IsChecked.HasValue && Rotate.IsChecked.Value;
+			//editCnfg.AllowScaleGeometry = Scale.IsChecked.HasValue && Scale.IsChecked.Value;
+			//editCnfg.MaintainAspectRatio = MaintainAspectRatio.IsChecked.HasValue && MaintainAspectRatio.IsChecked.Value;
+			//editCnfg.VertexSymbol =
+			//		new SimpleMarkerSymbol() { Style = SimpleMarkerStyle.Diamond, Color = Colors.Yellow, Size = 15 };
 
 			try
 			{
@@ -75,23 +78,24 @@ namespace ArcGISRuntime.Samples.Desktop
 				switch (content)
 				{
 					case "Draw":
-						{
-							var r = await MyMapView.Editor.RequestShapeAsync(drawShape, null, progress);
+					{
+
+						var r = await DrawShapeAsync(drawShape);
 							graphicsOverlay.Graphics.Add(new Graphic() { Geometry = r });
 							break;
 						}
-					case "Edit":
-						{
-							if (_editGraphic == null)
-								return;
-							var g = _editGraphic;
-							g.IsVisible = false;
-							var r = await MyMapView.Editor.EditGeometryAsync(g.Geometry, null, progress);
-							resultGeometry = r ?? resultGeometry;
-							_editGraphic.Geometry = resultGeometry;
-							_editGraphic.IsSelected = false;
-							break;
-						}
+					//case "Edit":
+					//	{
+					//		if (_editGraphic == null)
+					//			return;
+					//		var g = _editGraphic;
+					//		g.IsVisible = false;
+					//		var r = await MyMapView.Editor.EditGeometryAsync(g.Geometry, null, progress);
+					//		resultGeometry = r ?? resultGeometry;
+					//		_editGraphic.Geometry = resultGeometry;
+					//		_editGraphic.IsSelected = false;
+					//		break;
+					//	}
 				}
 
 			}
@@ -116,9 +120,49 @@ namespace ArcGISRuntime.Samples.Desktop
 				MessageBox.Show(message);
 		}
 
+		private bool isDrawActive = false;
+		private CancellationTokenSource cancellationTokenSource;
+		private async Task<Geometry> DrawShapeAsync(DrawShape drawShape)
+		{
+			Geometry r = null;
+			cancellationTokenSource = new CancellationTokenSource();
+			try
+			{
+
+				switch (drawShape)
+				{
+					case DrawShape.Point:
+					{
+						isDrawActive = true;
+						r = await SceneDrawHelper.DrawPointAsync(MyMapView, cancellationTokenSource.Token);
+						break;
+					}
+					case DrawShape.Freehand:
+					case DrawShape.LineSegment:
+					case DrawShape.Polyline:
+					{
+						isDrawActive = true;
+						r = await SceneDrawHelper.DrawPolylineAsync(MyMapView, cancellationTokenSource.Token);
+						break;
+					}
+					default:
+					{
+						isDrawActive = true;
+						r = await SceneDrawHelper.DrawPolygonAsync(MyMapView, cancellationTokenSource.Token);
+						break;
+					}
+				}
+			}
+			finally
+			{
+				isDrawActive = false;
+			}
+			return r;
+		}
+
 		private async void MyMapView_MapViewTapped(object sender, MapViewInputEventArgs e)
 		{
-			if (MyMapView.Editor.IsActive)
+			if (isDrawActive)
 				return;
 
 			var drawShape = (DrawShape)DrawShapes.SelectedItem;
@@ -139,9 +183,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				}
 
 				//Cancel editing if started
-				if (MyMapView.Editor.Cancel.CanExecute(null))
-					MyMapView.Editor.Cancel.Execute(null);
-
+				if (!cancellationTokenSource.IsCancellationRequested)
+					cancellationTokenSource.Cancel();
 				_editGraphic = graphic;
 				_editGraphic.IsSelected = true;
 			}

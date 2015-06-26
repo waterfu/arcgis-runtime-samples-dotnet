@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -27,6 +28,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public DynamicLayerEditAttribute()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-13075150.8872716, 4015586.5093488, -13073624.4294544, 4016213.20181174, SpatialReferences.WebMercator)));
         }
         
         /// <summary>
@@ -38,7 +40,7 @@ namespace ArcGISRuntime.Samples.Desktop
             var currentViewpoint = MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry);
             var viewpointExtent = currentViewpoint.TargetGeometry.Extent;
 
-            var layer = MyMapView.Map.Layers["PoolPermit"] as ArcGISDynamicMapServiceLayer;
+            var layer = MyMapView.Scene.Layers["PoolPermit"] as ArcGISDynamicMapServiceLayer;
             var task = new IdentifyTask(new Uri(layer.ServiceUri));
             var mapPoint = MyMapView.ScreenToLocation(e.Position);
             var parameter = new IdentifyParameters(mapPoint, viewpointExtent, 2, (int)MyMapView.ActualHeight, (int)MyMapView.ActualWidth);
@@ -80,7 +82,7 @@ namespace ArcGISRuntime.Samples.Desktop
         /// </summary>
         private async Task<IReadOnlyDictionary<object, string>> GetChoicesAsync()
         {
-            var layer = MyMapView.Map.Layers["PoolPermit"] as ArcGISDynamicMapServiceLayer;
+            var layer = MyMapView.Scene.Layers["PoolPermit"] as ArcGISDynamicMapServiceLayer;
             var id = layer.VisibleLayers[0];
             string message = null;
             try
@@ -129,7 +131,7 @@ namespace ArcGISRuntime.Samples.Desktop
             ChoiceList.SelectionChanged -= ChoiceList_SelectionChanged;
             var featureID = (Int64)AttributeEditor.Tag;
             var selected = (KeyValuePair<object, string>)ChoiceList.SelectedItem;
-            var layer = MyMapView.Map.Layers["PoolPermit"] as ArcGISDynamicMapServiceLayer;
+            var layer = MyMapView.Scene.Layers["PoolPermit"] as ArcGISDynamicMapServiceLayer;
             var overlay = MyMapView.GraphicsOverlays["Highlighter"] as GraphicsOverlay;
             string message = null;
             try

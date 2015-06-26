@@ -10,21 +10,21 @@
                              Symbol="{StaticResource TransparentFillSymbol}" />
     </UserControl.Resources>
     <Grid>
-        <esri:MapView x:Name="MyMapView"
-                      MapViewTapped="MyMapView_MapViewTapped">
-            <esri:Map InitialViewpoint="-13075150.8872716,4015586.5093488,-13073624.4294544,4016213.20181174">
+        <esri:SceneView x:Name="MyMapView"
+                      SceneViewTapped="MyMapView_MapViewTapped">
+            <esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
                 <!-- Renders features at current extent -->
                 <esri:ArcGISDynamicMapServiceLayer ID="PoolPermit"
                                                    VisibleLayers="0"
                                                    ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/PoolPermits/MapServer" />
-            </esri:Map>
-            <esri:MapView.GraphicsOverlays>
+            </esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
                 <!-- Highlights one feature at a time -->
                 <esri:GraphicsOverlay ID="Highlighter"
                                       Renderer="{StaticResource HighlightRenderer}" />
-            </esri:MapView.GraphicsOverlays>
-        </esri:MapView>
+            </esri:SceneView.GraphicsOverlays>
+        </esri:SceneView>
         <!-- Used for attribute editing -->
         <Border x:Name="AttributeEditor"
                 Visibility="Collapsed"

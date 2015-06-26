@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -27,6 +28,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public EditRelatedData()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-9813341.31730507, 5126248.61666055, -9810989.33812169, 5127472.38082941, SpatialReferences.WebMercator)));
         }
         
         /// <summary>
@@ -34,7 +36,7 @@ namespace ArcGISRuntime.Samples.Desktop
         /// </summary>
         private async void MyMapView_MapViewTapped(object sender, MapViewInputEventArgs e)
         {
-            var layer = MyMapView.Map.Layers["ServiceRequests"] as ArcGISDynamicMapServiceLayer;
+            var layer = MyMapView.Scene.Layers["ServiceRequests"] as ArcGISDynamicMapServiceLayer;
             var task = new IdentifyTask(new Uri(layer.ServiceUri));
             var mapPoint = MyMapView.ScreenToLocation(e.Position);
 
@@ -134,7 +136,7 @@ namespace ArcGISRuntime.Samples.Desktop
         /// </summary>
         private async Task<Esri.ArcGISRuntime.ArcGISServices.Relationship> GetRelationshipAsync()
         {
-            var layer = MyMapView.Map.Layers["ServiceRequests"] as ArcGISDynamicMapServiceLayer;
+            var layer = MyMapView.Scene.Layers["ServiceRequests"] as ArcGISDynamicMapServiceLayer;
             if (layer == null || layer.VisibleLayers == null)
                 return null;
             var id = layer.VisibleLayers.FirstOrDefault();
@@ -150,7 +152,7 @@ namespace ArcGISRuntime.Samples.Desktop
         private async Task QueryRelatedRecordsAsync()
         {
             var featureID = (Int64)AddButton.Tag;
-            var layer = MyMapView.Map.Layers["ServiceRequests"] as ArcGISDynamicMapServiceLayer;
+			var layer = MyMapView.Scene.Layers["ServiceRequests"] as ArcGISDynamicMapServiceLayer;
             var id = layer.VisibleLayers.FirstOrDefault();
             var task = new QueryTask(new Uri(string.Format("{0}/{1}", layer.ServiceUri, id)));
             if (relationship == null)
@@ -187,7 +189,7 @@ namespace ArcGISRuntime.Samples.Desktop
         /// </summary>
         private async Task<ServiceFeatureTable> GetRelatedTableAsync()
         {
-            var layer = MyMapView.Map.Layers["ServiceRequests"] as ArcGISDynamicMapServiceLayer;
+			var layer = MyMapView.Scene.Layers["ServiceRequests"] as ArcGISDynamicMapServiceLayer;
             // Creates table based on related table ID of the visible layer in dynamic layer 
             // using FeatureServer specifying rank and comments fields to enable editing.
             var id = relationship.RelatedTableID.Value;
