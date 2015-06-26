@@ -14,18 +14,18 @@
             <esri:SimpleRenderer x:Key="FillRenderer" Symbol="{StaticResource FillSymbol}" />
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" WrapAround="True" LayerLoaded="MyMapView_LayerLoaded">
-			<esri:Map InitialViewpoint="-8985039, 4495835, -8114289, 4889487">
+        <esri:SceneView x:Name="MyMapView" LayerLoaded="MyMapView_LayerLoaded">
+			<esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer ID="StreetMapLayer"
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
 				<esri:ArcGISDynamicMapServiceLayer ID="HomelandSecurity"
                     ServiceUri="http://sampleserver4.arcgisonline.com/ArcGIS/rest/services/HomelandSecurity/Incident_Data_Extraction/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="graphicsOverlay" Renderer="{StaticResource FillRenderer}"/>
-			</esri:MapView.GraphicsOverlays>
-		</esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+		</esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Right" VerticalAlignment="Top"

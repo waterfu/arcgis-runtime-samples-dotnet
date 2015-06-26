@@ -31,7 +31,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public RoutingWithDirections()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-117.24377026205757, 32.61710761167467, -116.95879261773452, 32.841266856294624, SpatialReferences.Wgs84)));
 			_directionPointSymbol = LayoutRoot.Resources["directionPointSymbol"] as Symbol;
 
 			_stopsOverlay = MyMapView.GraphicsOverlays["StopsOverlay"];
@@ -101,7 +101,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 txtRouteTotals.Text = string.Format("Time: {0:h':'mm':'ss} / Length: {1:0.00} mi", totalTime, totalLength);
 
 				if (!route.RouteFeature.Geometry.IsEmpty)
-					await MyMapView.SetViewAsync(route.RouteFeature.Geometry.Extent.Expand(1.25));
+					await MyMapView.SetViewAsync(new Viewpoint(route.RouteFeature.Geometry.Extent.Expand(1.25)));
             }
             catch (AggregateException ex)
             {

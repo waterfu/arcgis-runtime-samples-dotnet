@@ -32,7 +32,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public Routing()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-13044000, 3855000, -13040000, 3858000, SpatialReferences.WebMercator)));
 			_extentGraphicsOverlay = MyMapView.GraphicsOverlays["ExtentGraphicsOverlay"];
 			_routeGraphicsOverlay = MyMapView.GraphicsOverlays["RouteGraphicsOverlay"];
 			_stopsGraphicsOverlay = MyMapView.GraphicsOverlays["StopsGraphicsOverlay"];

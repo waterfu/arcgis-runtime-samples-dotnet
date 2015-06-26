@@ -13,17 +13,17 @@
             <esri:SimpleRenderer x:Key="AreaRenderer" Symbol="{StaticResource AreaSymbol}" />
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" WrapAround="True">
-			<esri:Map InitialViewpoint="-13879981, 3490335, -7778090, 6248898">
+        <esri:SceneView x:Name="MyMapView" >
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 				<esri:ArcGISDynamicMapServiceLayer Opacity="0.5"
                     ServiceUri="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+			<esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="areaOverlay" Renderer="{StaticResource AreaRenderer}"/>
-			</esri:MapView.GraphicsOverlays>
-		</esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+		</esri:SceneView>
 		
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Right" VerticalAlignment="Top"

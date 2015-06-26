@@ -8,7 +8,7 @@
             <esri:SimpleRenderer x:Key="AOIRenderer" Symbol="{StaticResource AOISymbol}" />
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" />
+        <esri:SceneView x:Name="MyMapView" />
 
 		<Border x:Name="panelUI"
 				Background="White" BorderBrush="Black" BorderThickness="1"

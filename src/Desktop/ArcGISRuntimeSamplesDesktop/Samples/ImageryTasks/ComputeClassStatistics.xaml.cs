@@ -5,9 +5,11 @@ using Esri.ArcGISRuntime.Tasks.Imagery;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -37,7 +39,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			if (e.Layer is ArcGISImageServiceLayer)
 			{
 				if (e.Layer.FullExtent != null)
-					await MyMapView.SetViewAsync(e.Layer.FullExtent);
+					await MyMapView.SetViewAsync(new Viewpoint(e.Layer.FullExtent));
 
 				_imageLayer = (ArcGISImageServiceLayer)e.Layer;
 				await AcceptClassPointsAsync();
@@ -53,8 +55,8 @@ namespace ArcGISRuntime.Samples.Desktop
 					throw new ArgumentException("Before computing statistics, enter two or more class definition areas by clicking the image on the map.");
 
 				progress.Visibility = Visibility.Visible;
-				if (MyMapView.Editor.IsActive)
-					MyMapView.Editor.Cancel.Execute(null);
+				//if (MyMapView.Editor.IsActive)
+				//	MyMapView.Editor.Cancel.Execute(null);
 
 				var statsTask = new ComputeClassStatisticsTask(new Uri(imageLayer.ServiceUri));
 
@@ -101,7 +103,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				while (true)
 				{
 
-					var point = await MyMapView.Editor.RequestPointAsync();
+					var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+					point = new MapPoint(point.X, point.Y, point.SpatialReference);
 					var polygon = GeometryEngine.Buffer(point, viewpointExtent.Width * .01);
 					var attr = new Dictionary<string, object>() { { "ID", _graphicsOverlay.Graphics.Count + 1 } };
 					_graphicsOverlay.Graphics.Add(new Graphic(polygon, attr));

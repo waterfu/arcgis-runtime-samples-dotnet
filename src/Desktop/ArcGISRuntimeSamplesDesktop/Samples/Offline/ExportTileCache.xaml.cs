@@ -44,7 +44,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			InitializeComponent();
 
 			var extentWGS84 = new Envelope(-123.77, 36.80, -119.77, 38.42, SpatialReferences.Wgs84);
-			MyMapView.Map.InitialViewpoint = new Viewpoint(extentWGS84);
+			MyMapView.SetView(new Viewpoint(extentWGS84));
 
 			MyMapView.Loaded += MyMapView_Loaded;
 		}
@@ -98,7 +98,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				}
 
 				await _onlineTiledLayer.InitializeAsync();
-				MyMapView.Map.Layers.Add(_onlineTiledLayer);
+				MyMapView.Scene.Layers.Add(_onlineTiledLayer);
 			}
 			catch (Exception ex)
 			{
@@ -178,9 +178,9 @@ namespace ArcGISRuntime.Samples.Desktop
 					OverwriteExistingFiles = true
 				};
 
-				var localTiledLayer = MyMapView.Map.Layers.FirstOrDefault(lyr => lyr.ID == LOCAL_LAYER_ID);
+				var localTiledLayer = MyMapView.Scene.Layers.FirstOrDefault(lyr => lyr.ID == LOCAL_LAYER_ID);
 				if (localTiledLayer != null)
-					MyMapView.Map.Layers.Remove(localTiledLayer);
+					MyMapView.Scene.Layers.Remove(localTiledLayer);
 
 
 				var result = await _exportTilesTask.GenerateTileCacheAndDownloadAsync(
@@ -196,18 +196,18 @@ namespace ArcGISRuntime.Samples.Desktop
 
 
 				localTiledLayer = new ArcGISLocalTiledLayer(result.OutputPath) { ID = LOCAL_LAYER_ID };
-				MyMapView.Map.Layers.Insert(1, localTiledLayer);
+				MyMapView.Scene.Layers.Insert(1, localTiledLayer);
 
 				_onlineTiledLayer.IsVisible = false;
 				_aoiOverlay.IsVisible = true;
 
-                if (MyMapView.Scale < _genOptions.MinScale)
-                {
+				//if (MyMapView.Scale < _genOptions.MinScale)
+				//{
                     // Get current viewpoints extent from the MapView
                     var currentViewpoint = MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry);
                     var viewpointExtent = currentViewpoint.TargetGeometry.Extent;
-                    await MyMapView.SetViewAsync(viewpointExtent.GetCenter(), _genOptions.MinScale);
-                }
+                    await MyMapView.SetViewAsync(new Viewpoint(viewpointExtent.GetCenter(), _genOptions.MinScale));
+				//}
 					
 
 				panelTOC.Visibility = Visibility.Visible;
@@ -249,9 +249,9 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			try
 			{
-				var localTiledLayer = MyMapView.Map.Layers.FirstOrDefault(lyr => lyr.ID == LOCAL_LAYER_ID);
+				var localTiledLayer = MyMapView.Scene.Layers.FirstOrDefault(lyr => lyr.ID == LOCAL_LAYER_ID);
 				if (localTiledLayer != null)
-					MyMapView.Map.Layers.Remove(localTiledLayer);
+					MyMapView.Scene.Layers.Remove(localTiledLayer);
 
 				string tilePath = Path.Combine(Path.GetTempPath(), TILE_CACHE_FOLDER);
 				if (Directory.Exists(tilePath))
@@ -267,12 +267,12 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			try
 			{
-				var localTiledLayer = MyMapView.Map.Layers.FirstOrDefault(lyr => lyr.ID == LOCAL_LAYER_ID);
+				var localTiledLayer = MyMapView.Scene.Layers.FirstOrDefault(lyr => lyr.ID == LOCAL_LAYER_ID);
 				if (localTiledLayer != null)
-					MyMapView.Map.Layers.Remove(localTiledLayer);
+					MyMapView.Scene.Layers.Remove(localTiledLayer);
 
 				var extentWGS84 = new Envelope(-123.77, 36.80, -119.77, 38.42, SpatialReferences.Wgs84);
-				MyMapView.SetView(extentWGS84);
+				MyMapView.SetView(new Viewpoint(extentWGS84));
 
 			}
 			catch (Exception ex)

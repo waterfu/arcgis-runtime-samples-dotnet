@@ -11,16 +11,16 @@
 			<esri:SimpleRenderer x:Key="ViewshedRenderer" Symbol="{StaticResource DefaultFillSymbol}" />
 		</Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView">
-			<esri:Map InitialViewpoint="-12004036,4652780,-11735714,4808810,3857">
+        <esri:SceneView x:Name="MyMapView">
+			<esri:Scene >
 				<esri:ArcGISTiledMapServiceLayer ID="TopoMapLayer"
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer" />
-            </esri:Map>
-			<esri:MapView.GraphicsOverlays>
+            </esri:Scene>
+			<esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="ViewshedOverlay" Renderer="{StaticResource ViewshedRenderer}"/>
 				<esri:GraphicsOverlay ID="inputOverlay" Renderer="{StaticResource PointRenderer}"/>
-			</esri:MapView.GraphicsOverlays>
-		</esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+		</esri:SceneView>
 		
 		<Border x:Name="uiPanel" Background="White" BorderBrush="Black" BorderThickness="1"
 			HorizontalAlignment="Right" VerticalAlignment="Top"

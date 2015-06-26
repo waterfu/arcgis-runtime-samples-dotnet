@@ -4,9 +4,11 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Tasks.Query;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -36,7 +38,7 @@ namespace ArcGISRuntime.Samples.Desktop
             if (e.Layer is ArcGISImageServiceLayer)
             {
                 if (e.Layer.FullExtent != null)
-                    await MyMapView.SetViewAsync(e.Layer.FullExtent);
+                    await MyMapView.SetViewAsync(new Viewpoint(e.Layer.FullExtent));
             }
         }
 
@@ -53,8 +55,8 @@ namespace ArcGISRuntime.Samples.Desktop
         {
             try
             {
-                var envelope = await MyMapView.Editor.RequestShapeAsync(DrawShape.Envelope) as Envelope;
-
+				var polygon = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+	            var envelope = polygon.Extent;
                 QueryTask queryTask = new QueryTask(
 					new Uri("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Portland/Aerial/ImageServer/"));
 

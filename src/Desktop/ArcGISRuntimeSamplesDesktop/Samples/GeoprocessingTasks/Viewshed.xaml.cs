@@ -4,8 +4,10 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Tasks.Geoprocessing;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -28,7 +30,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public Viewshed()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-12004036, 4652780, -11735714, 4808810, SpatialReferences.WebMercator)));
 			_inputOverlay = MyMapView.GraphicsOverlays["inputOverlay"];
 			_viewshedOverlay = MyMapView.GraphicsOverlays["ViewshedOverlay"];
 
@@ -45,8 +47,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				_viewshedOverlay.Graphics.Clear();
 
                 //get the user's input point
-                var inputPoint = await MyMapView.Editor.RequestPointAsync();
-
+				var inputPoint = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+	            inputPoint = new MapPoint(inputPoint.X, inputPoint.Y, inputPoint.SpatialReference);
                 progress.Visibility = Visibility.Visible;
 				_inputOverlay.Graphics.Add(new Graphic() { Geometry = inputPoint });
 

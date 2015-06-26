@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -33,7 +34,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public DriveTimes()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-122.5009, 37.741, -122.3721, 37.8089, SpatialReferences.Wgs84)));
             _resultsOverlay = MyMapView.GraphicsOverlays["resultsOverlay"];
             _inputOverlay = MyMapView.GraphicsOverlays["inputOverlay"];
 

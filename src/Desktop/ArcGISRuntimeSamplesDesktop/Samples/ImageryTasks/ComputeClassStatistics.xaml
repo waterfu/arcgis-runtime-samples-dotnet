@@ -13,19 +13,19 @@
             <esri:SimpleRenderer x:Key="FillRenderer" Symbol="{StaticResource FillSymbol}" />
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" WrapAround="True">
-            <esri:Map>
+        <esri:SceneView x:Name="MyMapView" >
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer ID="StreetMapLayer"
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
 				<esri:ArcGISImageServiceLayer x:Name="imageLayer"
                     ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer" />
-			</esri:Map>
+			</esri:Scene>
 
-			<esri:MapView.GraphicsOverlays>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="graphicsOverlay" Renderer="{StaticResource FillRenderer}"/>
-			</esri:MapView.GraphicsOverlays>
-		</esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+		</esri:SceneView>
 
 		<Border x:Name="uiPanel"
 				Background="White" BorderBrush="Black" BorderThickness="1"
@@ -41,7 +41,7 @@
               
                 <StackPanel Margin="0,16,0,0" HorizontalAlignment="Center" Orientation="Horizontal">
                     <Button Content="Compute Class Statistics" Click="ComputeClassStatisticsButton_Click"
-                            IsEnabled="{Binding ElementName=MyMapView, Path=Editor.IsActive}" />
+                            IsEnabled="true" />
                     <Button Content="Reset" Margin="12,0,0,0" Click="ResetButton_Click" />
                 </StackPanel>
                 <ProgressBar x:Name="progress" IsIndeterminate="True" Margin="12,12,12,0" Visibility="Collapsed" />

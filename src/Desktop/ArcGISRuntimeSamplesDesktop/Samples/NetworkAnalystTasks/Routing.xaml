@@ -8,20 +8,20 @@
             <esri:SimpleRenderer x:Key="RouteLayerRenderer" Symbol="{StaticResource RouteSymbol}" />
         </Grid.Resources>
         
-        <esri:MapView x:Name="MyMapView" 
-					  MapViewTapped="MyMapView_MapViewTapped">
-			<esri:Map InitialViewpoint="-13044000, 3855000, -13040000, 3858000">
+        <esri:SceneView x:Name="MyMapView" 
+					  SceneViewTapped="MyMapView_MapViewTapped">
+			<esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
-            </esri:Map>
+            </esri:Scene>
 			
-			<esri:MapView.GraphicsOverlays>
+			<esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="ExtentGraphicsOverlay" Renderer="{StaticResource RouteLayerRenderer}" />
 				<esri:GraphicsOverlay ID="RouteGraphicsOverlay" Renderer="{StaticResource RouteLayerRenderer}" />
 				<esri:GraphicsOverlay ID="StopsGraphicsOverlay" />
-			</esri:MapView.GraphicsOverlays>
-        </esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+        </esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Right" VerticalAlignment="Top"

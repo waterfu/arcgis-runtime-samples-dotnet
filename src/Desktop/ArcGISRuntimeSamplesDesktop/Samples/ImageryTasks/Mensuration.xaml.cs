@@ -6,9 +6,11 @@ using Esri.ArcGISRuntime.Tasks.Imagery;
 using System;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -30,7 +32,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public Mensuration()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-8838052, 5409956, -8836538, 5410660, SpatialReferences.WebMercator)));
             _pointSymbol = layoutGrid.Resources["PointSymbol"] as Symbol;
             _lineSymbol = layoutGrid.Resources["LineSymbol"] as Symbol;
             _polygonSymbol = layoutGrid.Resources["PolygonSymbol"] as Symbol;
@@ -233,10 +235,29 @@ namespace ArcGISRuntime.Samples.Desktop
             try
             {
 				_graphicsOverlay.Graphics.Clear();
+	            Geometry shape = null;
+	            switch (drawShape)
+	            {
+					case DrawShape.Point:
+		            {
+			            shape = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+			            break;
+		            }
 
-                var shape = await MyMapView.Editor.RequestShapeAsync(drawShape, symbol);
-
-				_graphicsOverlay.Graphics.Add(new Graphic(shape, symbol));
+					case DrawShape.LineSegment:
+					case DrawShape.Polyline:
+					{
+						shape = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
+						break;
+					}	
+					case DrawShape.Polygon:
+					{
+						shape = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+						break;
+					}
+	            }
+				if(shape != null)
+					_graphicsOverlay.Graphics.Add(new Graphic(shape, symbol));
                 return shape;
             }
 			catch (TaskCanceledException) 

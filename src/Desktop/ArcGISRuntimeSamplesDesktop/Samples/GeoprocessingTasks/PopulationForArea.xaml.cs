@@ -4,8 +4,10 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Tasks.Geoprocessing;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -26,7 +28,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public PopulationForArea()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-13879981, 3490335, -7778090, 6248898, SpatialReferences.WebMercator)));
 			_areaOverlay = MyMapView.GraphicsOverlays["areaOverlay"];
         }
 
@@ -38,7 +40,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 txtResult.Visibility = System.Windows.Visibility.Collapsed;
 				_areaOverlay.Graphics.Clear();
 
-                var boundary = await MyMapView.Editor.RequestShapeAsync(DrawShape.Freehand) as Polyline;
+				var boundary = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
                 var polygon = new Polygon(boundary.Parts, MyMapView.SpatialReference);
                 polygon = GeometryEngine.Simplify(polygon) as Polygon;
 				_areaOverlay.Graphics.Add(new Graphic() { Geometry = polygon });

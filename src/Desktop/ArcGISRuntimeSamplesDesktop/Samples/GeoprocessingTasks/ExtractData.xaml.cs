@@ -7,9 +7,11 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -31,7 +33,8 @@ namespace ArcGISRuntime.Samples.Desktop
         public ExtractData()
         {
             InitializeComponent();
-
+	        MyMapView.SetView(
+		        new Viewpoint(new Envelope(-8985039, 4495835, -8114289, 4889487, SpatialReferences.WebMercator)));
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
 			_gpTask = new Geoprocessor(new Uri(ExtractDataServiceUrl));
 
@@ -67,7 +70,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 Polygon aoi = null;
                 if (chkFreehand.IsChecked == true)
                 {
-                    var boundary = await MyMapView.Editor.RequestShapeAsync(DrawShape.Freehand) as Polyline;
+					var boundary = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
                     if (boundary.Parts.First().Count <= 1)
                         return;
 
@@ -76,7 +79,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 }
                 else
                 {
-                    aoi = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polygon) as Polygon;
+					aoi = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
                 }
 
 				_graphicsOverlay.Graphics.Add(new Graphic(aoi));
