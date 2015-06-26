@@ -2,9 +2,13 @@
 using Esri.ArcGISRuntime.Layers;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
+using Esri.ArcGISRuntime.Geometry;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -18,6 +22,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public ExplicitSave()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-13045660.491307795, 4036200.4792818795, -13044437.4988552, 4037423.471734474, SpatialReferences.WebMercator)));
         }
 
         /// <summary>
@@ -25,12 +30,12 @@ namespace ArcGISRuntime.Samples.Desktop
         /// </summary>
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            var layer = MyMapView.Map.Layers["Notes"] as FeatureLayer;
+            var layer = MyMapView.Scene.Layers["Notes"] as FeatureLayer;
             var table = layer.FeatureTable;
             string message = null;
             try
             {
-                var mapPoint = await MyMapView.Editor.RequestPointAsync();
+				var mapPoint = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
                 var feature = new GeodatabaseFeature(table.Schema)
                 {
                     Geometry = mapPoint
@@ -53,7 +58,7 @@ namespace ArcGISRuntime.Samples.Desktop
         /// </summary>
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            var layer = MyMapView.Map.Layers["Notes"] as FeatureLayer;
+            var layer = MyMapView.Scene.Layers["Notes"] as FeatureLayer;
             var table = (ArcGISFeatureTable)layer.FeatureTable;            
             string message = null;
             try
@@ -83,7 +88,7 @@ namespace ArcGISRuntime.Samples.Desktop
         /// </summary>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            var layer = MyMapView.Map.Layers["Notes"] as FeatureLayer;
+            var layer = MyMapView.Scene.Layers["Notes"] as FeatureLayer;
             var table = (ArcGISFeatureTable)layer.FeatureTable;
             if (table.HasEdits)
                 table.ClearEdits();

@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -23,6 +24,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public FeatureLayerEditAttribute()
 		{
 			InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-13629664.9319909, 4549128.41263531, -13628885.4336415, 4549541.25215971, SpatialReferences.WebMercator)));
 		}
 		
 		/// <summary>
@@ -30,7 +32,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		/// </summary>
 		private async void MyMapView_MapViewTapped(object sender, MapViewInputEventArgs e)
 		{
-			var layer = MyMapView.Map.Layers["Incidents"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Incidents"] as FeatureLayer;
 			layer.ClearSelection();
 			SetAttributeEditor();
 			string message = null;
@@ -58,7 +60,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		/// </summary>
 		private IEnumerable<KeyValuePair<object, string>> GetChoices()
 		{
-			var layer = MyMapView.Map.Layers["Incidents"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Incidents"] as FeatureLayer;
 			var table = (ArcGISFeatureTable)layer.FeatureTable;
 			// Gets service metadata from table and extract type field information for attribute editing.            
 			// Since req_type is also the type id field and no domain was specified in the service, use Types.
@@ -101,7 +103,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			ChoiceList.SelectionChanged -= ChoiceList_SelectionChanged;
 			var feature = (GeodatabaseFeature)AttributeEditor.Tag;
-			var layer = MyMapView.Map.Layers["Incidents"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Incidents"] as FeatureLayer;
 			var table = (ArcGISFeatureTable)layer.FeatureTable;
 			string message = null;
 			try

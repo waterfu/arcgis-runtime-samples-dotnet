@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid>
-        <esri:MapView x:Name="MyMapView">            
-            <esri:Map InitialViewpoint="-13045660.491307795,4036200.4792818795,-13044437.4988552,4037423.471734474,102100">
+        <esri:SceneView x:Name="MyMapView">            
+            <esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
                 <!-- Makes all features at current extent available for editing -->
                 <esri:FeatureLayer ID="Notes">
                     <esri:ServiceFeatureTable ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/Notes/FeatureServer/0"/>
                 </esri:FeatureLayer>
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
         <!-- Used for accumulating, saving or canceling edits -->
         <Border Background="White"
                 BorderBrush="Black"

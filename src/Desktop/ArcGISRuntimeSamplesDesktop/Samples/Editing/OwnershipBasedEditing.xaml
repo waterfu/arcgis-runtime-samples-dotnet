@@ -4,18 +4,18 @@
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
              xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Grid>
-        <esri:MapView x:Name="MyMapView"
+        <esri:SceneView x:Name="MyMapView"
                       LayerUnloaded="MyMapView_LayerUnloaded"
                       LayerLoaded="MyMapView_LayerLoaded"
-                      MapViewTapped="MyMapView_MapViewTapped">
-            <esri:Map InitialViewpoint="-10603931.812,3384001.576,-10595782.642,3388315.896,102100">
+                      SceneViewTapped="MyMapView_MapViewTapped">
+            <esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
                 <!-- Makes all features at current extent available for editing -->
                 <esri:FeatureLayer ID="Marine">
                     <esri:ServiceFeatureTable ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/SaveTheBay/FeatureServer/0" />
                 </esri:FeatureLayer>
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
         <Border Background="White"
                 BorderBrush="Black"
                 BorderThickness="1"

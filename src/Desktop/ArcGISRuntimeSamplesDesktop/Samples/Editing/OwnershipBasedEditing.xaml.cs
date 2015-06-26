@@ -5,9 +5,12 @@ using Esri.ArcGISRuntime.Security;
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Geometry;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -24,6 +27,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public OwnershipBasedEditing()
 		{
 			InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-10603931.812, 3384001.576, -10595782.642, 3388315.896, SpatialReferences.WebMercator)));
 			// Enables application to handle credential challenge.
 			IdentityManager.Current.ChallengeHandler = new ChallengeHandler(GetCredentialAsync);
 		}
@@ -100,17 +104,17 @@ namespace ArcGISRuntime.Samples.Desktop
 		/// </summary>
 		private void SignOut()
 		{
-			var layer = MyMapView.Map.Layers["Marine"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Marine"] as FeatureLayer;
 			if (layer == null) return;
 			var table = (ServiceFeatureTable)layer.FeatureTable;
 			var credential = IdentityManager.Current.FindCredential(table.ServiceUri);
 			if (credential != null)
 			{
 				loginAttempts = 0;
-				IdentityManager.Current.RemoveCredential(credential);             
-				MyMapView.Map.Layers.Remove(layer);
+				IdentityManager.Current.RemoveCredential(credential);
+				MyMapView.Scene.Layers.Remove(layer);
 				InitalizeLoginPanel(table.ServiceUri);
-				MyMapView.Map.Layers.Add(new FeatureLayer(new Uri(table.ServiceUri)) { ID = layer.ID });
+				MyMapView.Scene.Layers.Add(new FeatureLayer(new Uri(table.ServiceUri)) { ID = layer.ID });
 			}
 		}
 
@@ -145,15 +149,16 @@ namespace ArcGISRuntime.Samples.Desktop
 			SignOut();
 		}
 
+		private bool isDrawActive = false;
 		/// <summary>
 		/// Selects feature and checks whether update or delete is allowed.
 		/// </summary>
 		private async void MyMapView_MapViewTapped(object sender, MapViewInputEventArgs e)
 		{
 			// Ignore tap events while in edit mode so we do not interfere with add point.
-			if (MyMapView.Editor.IsActive)
+			if (isDrawActive)
 				return;
-			var layer = MyMapView.Map.Layers["Marine"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Marine"] as FeatureLayer;
 			var table = (ArcGISFeatureTable)layer.FeatureTable;
 			layer.ClearSelection();
 
@@ -201,13 +206,15 @@ namespace ArcGISRuntime.Samples.Desktop
 		/// </summary>
 		private async void AddButton_Click(object sender, RoutedEventArgs e)
 		{
-			var layer = MyMapView.Map.Layers["Marine"] as FeatureLayer;
+			var layer = MyMapView.Scene.Layers["Marine"] as FeatureLayer;
 			var table = (ArcGISFeatureTable)layer.FeatureTable;
 			var typeID = (Int32)((Button)sender).Tag;
 			string message = null;
 			try
 			{
-				var mapPoint = await MyMapView.Editor.RequestPointAsync();
+				isDrawActive = true;
+				var mapPoint = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+				isDrawActive = false;
 				var feature = new GeodatabaseFeature(table.Schema) { Geometry = mapPoint };
 				if (table.ServiceInfo.Types == null)
 					return;
