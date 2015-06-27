@@ -5,9 +5,11 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -29,7 +31,8 @@ namespace ArcGISRuntime.Samples.Desktop
         public ClipGeometry()
         {
             InitializeComponent();
-
+	        MyMapView.SetView(
+		        new Viewpoint(new Envelope(-15053000, 2749000, -6540000, 6590000, SpatialReferences.WebMercator)));
             _clipSymbol = layoutGrid.Resources["ClipRectSymbol"] as Symbol;
 			_clippedGraphicsOverlay = MyMapView.GraphicsOverlays["clippedGraphicsOverlay"];
             CreateFeatureLayers();
@@ -44,7 +47,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
                 var table = gdb.FeatureTables.First(ft => ft.Name == "US-States");
                 _statesLayer = new FeatureLayer() { ID = table.Name, FeatureTable = table };
-                MyMapView.Map.Layers.Insert(1, _statesLayer);
+                MyMapView.Scene.Layers.Insert(1, _statesLayer);
             }
             catch (Exception ex)
             {
@@ -58,9 +61,9 @@ namespace ArcGISRuntime.Samples.Desktop
             try
             {
 				_clippedGraphicsOverlay.Graphics.Clear();
-
+				var r = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
                 // wait for user to draw clip rect
-                var rect = await MyMapView.Editor.RequestShapeAsync(DrawShape.Rectangle);
+	            var rect = r.Extent;
 
 				Polygon polygon = GeometryEngine.NormalizeCentralMeridian(rect) as Polygon;
 

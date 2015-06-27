@@ -4,9 +4,11 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -26,7 +28,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public ConvexHull()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-15000000, 2000000, -7000000, 8000000, SpatialReferences.WebMercator)));
 			_inputGraphicsOverlay = MyMapView.GraphicsOverlays["inputGraphicsOverlay"];
 			_convexHullGraphicsOverlay = MyMapView.GraphicsOverlays["convexHullGraphicsOverlay"];
             _pointSymbol = (Symbol)layoutGrid.Resources["PointSymbol"];
@@ -47,7 +49,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			{
 				await MyMapView.LayersLoadedAsync();
 
-				var point = await MyMapView.Editor.RequestPointAsync();
+				var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
 
 				// reset graphics layers if we've already created a convex hull polygon
 				if (_convexHullGraphicsOverlay.Graphics.Count > 0)

@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
 	<Grid>
-		<esri:MapView x:Name="MyMapView">
-			<esri:MapView.Overlays>
+		<esri:SceneView x:Name="MyMapView">
+            <esri:SceneView.Overlays>
 				<esri:OverlayItemsControl>
 					<Border x:Name="FeatureOverlay" Background="#CCFFFFFF" BorderBrush="Black" BorderThickness="2"
 							Padding="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxHeight="300"
@@ -24,8 +24,8 @@
 						</Grid>
 					</Border>
 				</esri:OverlayItemsControl>
-			</esri:MapView.Overlays>
-		</esri:MapView>
+			</esri:SceneView.Overlays>
+		</esri:SceneView>
 
 		<Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30" Padding="20" Width="300"
                 Background="White" BorderBrush="Black" BorderThickness="1">

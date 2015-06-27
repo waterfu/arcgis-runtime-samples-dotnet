@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid>
-        <esri:MapView x:Name="MyMapView" WrapAround="True" >
-            <esri:Map>
+        <esri:SceneView x:Name="MyMapView" >
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer DisplayName="Basemap"
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Right" VerticalAlignment="Top" 

@@ -3,9 +3,11 @@ using Esri.ArcGISRuntime.Data;
 using Esri.ArcGISRuntime.Geometry;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -21,6 +23,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public FeatureLayerSelection()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-14675766,2695407,-6733121,6583994,SpatialReferences.WebMercator)));
         }
 
         private async void AddSelectButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -63,7 +66,9 @@ namespace ArcGISRuntime.Samples.Desktop
 
         private async Task<long[]> FindIntersectingFeaturesAsync()
         {
-			var rect = await MyMapView.Editor.RequestShapeAsync(DrawShape.Rectangle);
+
+			var r = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+	        var rect = r.Extent;
 
             SpatialQueryFilter filter = new SpatialQueryFilter();
             filter.Geometry = GeometryEngine.Project(rect, cities.FeatureTable.SpatialReference);

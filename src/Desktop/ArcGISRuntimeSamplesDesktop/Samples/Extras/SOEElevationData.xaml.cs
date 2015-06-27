@@ -7,12 +7,14 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -55,7 +57,9 @@ namespace ArcGISRuntime.Samples.Desktop
             try
             {
                 // Get user rectangle
-				var userEnvelope = await MyMapView.Editor.RequestShapeAsync(DrawShape.Envelope) as Envelope;
+
+				var r = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+	            var userEnvelope = r.Extent;
 				if (userEnvelope.Height == 0 || userEnvelope.Width == 0)
 					throw new ApplicationException("Please click and drag a box to define an extent.");
 

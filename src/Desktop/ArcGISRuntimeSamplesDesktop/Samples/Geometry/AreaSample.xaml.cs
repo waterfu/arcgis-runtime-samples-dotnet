@@ -3,9 +3,11 @@ using Esri.ArcGISRuntime.Geometry;
 using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -25,6 +27,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public AreaSample()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-130, 20, -65, 55, SpatialReferences.Wgs84)));
 			MyMapView.SpatialReferenceChanged += MyMapView_SpatialReferenceChanged;
 			_graphicsOverlay = MyMapView.GraphicsOverlays["AreaOverlay"];
         }
@@ -40,7 +43,7 @@ namespace ArcGISRuntime.Samples.Desktop
             try
             {
                 // Wait for user to draw
-                var geom = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polygon);
+				var geom = await SceneDrawHelper.DrawPolygonAsync(MyMapView, cancellationTokenSource.Token);
 
                 // show geometry on map
 				_graphicsOverlay.Graphics.Clear();
@@ -74,9 +77,11 @@ namespace ArcGISRuntime.Samples.Desktop
             }
         }
 
+	    private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private async void CancelCurrent_Click(object sender, RoutedEventArgs e)
         {
-            MyMapView.Editor.Cancel.Execute(null);
+			if (!cancellationTokenSource.IsCancellationRequested)
+				cancellationTokenSource.Cancel();
             ResetUI();
 			await DoCalculateAreaAndLengthAsync();
         }

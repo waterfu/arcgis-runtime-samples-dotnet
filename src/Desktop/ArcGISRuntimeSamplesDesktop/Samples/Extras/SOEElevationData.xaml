@@ -12,13 +12,13 @@
             <esri:SimpleRenderer x:Key="FillRenderer" Symbol="{StaticResource FillSymbol}" />
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView">
-            <esri:Map>
+        <esri:SceneView x:Name="MyMapView">
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer 
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer" />
                 <esri:GraphicsLayer x:Name="graphicsLayer" Renderer="{StaticResource FillRenderer}" />
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Right" VerticalAlignment="Top" 

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -37,7 +38,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public FeatureLayerHitTesting()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-14675766.3566695, 2695407.73380258, -6733121.86117095, 6583994.1013904, SpatialReferences.WebMercator)));
             DataContext = this;
         }
 

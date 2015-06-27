@@ -26,7 +26,7 @@ namespace ArcGISRuntime.Samples.Desktop
             MyMapView.AllowDrop = true;
             MyMapView.DragOver += MyMapView_DragOver;
             MyMapView.Drop += MyMapView_Drop;
-			MyMapView.MapViewTapped += MyMapView_MapViewTapped;
+			MyMapView.SceneViewTapped += MyMapView_MapViewTapped;
         }
 
         private async void MyMapView_Drop(object sender, DragEventArgs e)
@@ -80,10 +80,10 @@ namespace ArcGISRuntime.Samples.Desktop
 				var shapefile = await ShapefileTable.OpenAsync(path);
 
 				// clear existing map and spatial reference
-				if (MyMapView.Map.Layers.Any())
+				if (MyMapView.Scene.Layers.Any())
 				{
-					MyMapView.Map.Layers.Clear();
-					MyMapView.Map = new Map();
+					MyMapView.Scene.Layers.Clear();
+					MyMapView.Scene = new Scene();
 				}
 
 				// create feature layer based on the shapefile
@@ -94,7 +94,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 };
 
 				// Add the feature layer to the map
-				MyMapView.Map.Layers.Add(flayer);
+				MyMapView.Scene.Layers.Add(flayer);
 				txtInfo.DataContext = flayer;
 				txtInfo.Visibility = Visibility.Visible;
 			}
@@ -109,7 +109,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			try
 			{
-				var flayer = MyMapView.Map.Layers.OfType<FeatureLayer>().FirstOrDefault();
+				var flayer = MyMapView.Scene.Layers.OfType<FeatureLayer>().FirstOrDefault();
 				if (flayer == null)
 					return;
 

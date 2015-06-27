@@ -4,6 +4,7 @@ using Esri.ArcGISRuntime.Layers;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -48,10 +49,10 @@ namespace ArcGISRuntime.Samples.Desktop
 							extent = extent.Union(table.ServiceInfo.Extent);
 					}
 
-					MyMapView.Map.Layers.Add(flayer);
+					MyMapView.Scene.Layers.Add(flayer);
                 }
 
-				await MyMapView.SetViewAsync(extent.Expand(1.10));
+				await MyMapView.SetViewAsync(new Viewpoint(extent.Expand(1.10)));
             }
             catch (Exception ex)
             {

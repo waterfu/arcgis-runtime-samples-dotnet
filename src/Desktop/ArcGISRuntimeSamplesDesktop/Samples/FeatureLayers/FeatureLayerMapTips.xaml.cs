@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Esri.ArcGISRuntime.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -19,7 +21,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public FeatureLayerMapTips()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-88.35, 41.61, -88.05, 41.84, SpatialReferences.Wgs84)));
 			MyMapView.SpatialReferenceChanged += MyMapView_SpatialReferenceChanged;
 		}
 

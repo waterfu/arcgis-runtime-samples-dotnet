@@ -3,9 +3,9 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
 	<Grid>
-		<esri:MapView x:Name="MyMapView" WrapAround="True" 
+		<esri:SceneView x:Name="MyMapView" 
 					  MouseMove="MyMapView_MouseMove">
-			<esri:Map InitialViewpoint="-88.35,41.61,-88.05,41.84,4326">
+			<esri:Scene >
 				<esri:ArcGISTiledMapServiceLayer
 					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
@@ -25,9 +25,9 @@
 							OutFields="*" />
 					</esri:FeatureLayer.FeatureTable>
 				</esri:FeatureLayer>
-			</esri:Map>
+			</esri:Scene>
 
-			<esri:MapView.Overlays>
+			<esri:SceneView.Overlays>
 				<esri:OverlayItemsControl>
 					<Border x:Name="mapTip" Background="White" BorderBrush="Black" BorderThickness="2" 
 							Padding="4" Margin="4" HorizontalAlignment="Left" VerticalAlignment="Top" 
@@ -38,7 +38,7 @@
 						</StackPanel>
 					</Border>
 				</esri:OverlayItemsControl>
-			</esri:MapView.Overlays>
-		</esri:MapView>
+			</esri:SceneView.Overlays>
+		</esri:SceneView>
 	</Grid>
 </UserControl>

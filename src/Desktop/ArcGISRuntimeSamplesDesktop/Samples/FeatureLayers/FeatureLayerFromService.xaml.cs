@@ -29,7 +29,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				var gdbFeatureServiceTable = await ServiceFeatureTable.OpenAsync(
 					new Uri("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/2"));
 
-				MyMapView.Map.Layers.Add(new FeatureLayer(gdbFeatureServiceTable) { ID = "featureLayer" });
+				MyMapView.Scene.Layers.Add(new FeatureLayer(gdbFeatureServiceTable) { ID = "featureLayer" });
 			}
 			catch (Exception ex)
 			{

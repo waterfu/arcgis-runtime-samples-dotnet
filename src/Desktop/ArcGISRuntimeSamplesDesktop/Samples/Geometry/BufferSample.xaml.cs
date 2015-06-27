@@ -26,7 +26,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public BufferSample()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-10863036,3838021,-10744801,3887145,SpatialReferences.WebMercator)));
 			_graphicOverlay = MyMapView.GraphicsOverlays["graphicOverlay"];
 
 			SetupSymbols();

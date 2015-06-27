@@ -4,6 +4,8 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -19,6 +21,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public QueryFilterSample()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-14675766, 2695408, -6733122, 6583994, SpatialReferences.WebMercator)));
         }
 
         private async void QueryButton_Click(object sender, System.Windows.RoutedEventArgs e)
