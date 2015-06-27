@@ -59,7 +59,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			var graphicsLayer = new GraphicsLayer() { 
 				RenderingMode = (GraphicsRenderingMode)renderingModeCombo.SelectedValue 
 			};
-			MyMapView.Map.Layers.Add(graphicsLayer);
+			MyMapView.Scene.Layers.Add(graphicsLayer);
 
 			// Add new graphics if needed
 			var numGraphics = (int)graphicCountSlider.Value;

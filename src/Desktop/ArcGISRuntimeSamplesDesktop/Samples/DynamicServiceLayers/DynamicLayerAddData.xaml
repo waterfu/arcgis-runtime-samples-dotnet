@@ -34,7 +34,7 @@
 				Margin="20" Padding="20">
             <StackPanel>
                 <TextBlock Text="Map Layers" FontWeight="Bold" FontSize="16" Margin="0,0,0,8"/>
-                <ListView x:Name="LayersListView" ItemsSource="{Binding ElementName=MyMapView, Path=Map.Layers}" >
+                <ListView x:Name="LayersListView" ItemsSource="{Binding ElementName=MyMapView, Path=Scene.Layers}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <CheckBox Content="{Binding DisplayName}" FontSize="12" Margin="4" IsChecked="{Binding IsVisible}" />

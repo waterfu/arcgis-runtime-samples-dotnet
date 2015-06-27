@@ -29,15 +29,15 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			InitializeComponent();
 
-			_graphicsLayer = MyMapView.Map.Layers["graphicsLayer"] as GraphicsLayer;
-			MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+			_graphicsLayer = MyMapView.Scene.Layers["graphicsLayer"] as GraphicsLayer;
+			MyMapView.CameraChanged += MyMapView_ExtentChanged;
 		}
 
 		private async void MyMapView_ExtentChanged(object sender, EventArgs e)
 		{
 			try
 			{
-				MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+				MyMapView.CameraChanged -= MyMapView_ExtentChanged;
 				await CreateGraphics();
 			}
 			catch (Exception ex)

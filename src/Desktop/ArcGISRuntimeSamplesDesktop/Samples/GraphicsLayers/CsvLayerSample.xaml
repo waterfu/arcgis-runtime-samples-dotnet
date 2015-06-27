@@ -22,8 +22,8 @@
             </esri:ClassBreaksRenderer>
         </Grid.Resources>
         
-        <esri:MapView WrapAround="True">
-            <esri:Map>
+        <esri:SceneView >
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer 
                     ServiceUri="http://services.arcgisonline.com/arcgis/rest/services/world_topo_map/MapServer" />
                 
@@ -32,7 +32,7 @@
                     XFieldName="longitude" YFieldName="latitude"
                     Renderer="{StaticResource classBreaksRenderer1}">
                 </esri:CsvLayer>
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
     </Grid>
 </UserControl>

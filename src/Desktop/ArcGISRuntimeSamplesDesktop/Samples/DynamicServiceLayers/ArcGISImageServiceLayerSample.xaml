@@ -19,7 +19,7 @@
 			<Border.Effect>
 				<DropShadowEffect />
 			</Border.Effect>
-			<TextBlock x:Name="txtImageInfo" DataContext="{Binding ElementName=MyMapView, Path=Map.Layers[Image]}" 
+			<TextBlock x:Name="txtImageInfo" DataContext="{Binding ElementName=MyMapView, Path=Scene.Layers[Image]}" 
                        TextWrapping="Wrap" MaxWidth="300">
                 <Run Text="Image Layer: " FontWeight="Bold" />
                 <Run Text="{Binding DisplayName}" />

@@ -26,7 +26,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			InitializeComponent();
 
-			_graphicsLayer = MyMapView.Map.Layers["GraphicsLayer"] as GraphicsLayer;
+			_graphicsLayer = MyMapView.Scene.Layers["GraphicsLayer"] as GraphicsLayer;
 
 			_isHitTesting = true;
 			MyMapView.NavigationCompleted += MyMapView_NavigationCompleted;

@@ -4,10 +4,12 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -28,8 +30,8 @@ namespace ArcGISRuntime.Samples.Desktop
 		public GraphicsLayerSelection()
 		{
 			InitializeComponent();
-
-			_graphicsLayer = MyMapView.Map.Layers["graphicsLayer"] as GraphicsLayer;
+			MyMapView.SetView(new Viewpoint(new Envelope(-15053000, 2749000, -6540000, 6590000, SpatialReferences.WebMercator)));
+			_graphicsLayer = MyMapView.Scene.Layers["graphicsLayer"] as GraphicsLayer;
 			MyMapView.NavigationCompleted += MyMapView_NavigationCompleted;
 		}
 
@@ -91,7 +93,8 @@ namespace ArcGISRuntime.Samples.Desktop
 		// Retrieve a user click point and return hit tested graphics
 		private async Task<IEnumerable<Graphic>> FindIntersectingGraphicsAsync()
 		{
-			var mapRect = await MyMapView.Editor.RequestShapeAsync(DrawShape.Envelope) as Envelope;
+			var polygon = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+			var mapRect = polygon.Extent;
 
 			Rect winRect = new Rect(
 				MyMapView.LocationToScreen(new MapPoint(mapRect.XMin, mapRect.YMax, MyMapView.SpatialReference)),

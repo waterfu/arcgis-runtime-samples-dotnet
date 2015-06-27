@@ -12,13 +12,13 @@
     </UserControl.Resources>
 
     <Grid>
-        <esri:MapView x:Name="MyMapView" WrapAround="True">
-            <esri:Map>
+        <esri:SceneView x:Name="MyMapView">
+            <esri:Scene>
 				<esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer" />
 
 				<esri:GraphicsLayer ID="GraphicsLayer" />
-			</esri:Map>
-		</esri:MapView>
+			</esri:Scene>
+		</esri:SceneView>
     </Grid>
 </UserControl>
