@@ -28,7 +28,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			InitializeComponent();
 
-			_graphicsLayer = MyMapView.Map.Layers["graphicsLayer"] as GraphicsLayer;
+			_graphicsLayer = MyMapView.Scene.Layers["graphicsLayer"] as GraphicsLayer;
 			MyMapView.NavigationCompleted += MyMapView_NavigationCompleted;
 		}
 

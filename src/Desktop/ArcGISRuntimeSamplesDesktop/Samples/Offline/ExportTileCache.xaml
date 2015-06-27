@@ -44,8 +44,8 @@
 
                 <StackPanel x:Name="panelTOC" Margin="0,12,0,0" Visibility="Collapsed">
                     <TextBlock Text="Show / Hide Map Layers" FontSize="16" FontWeight="Bold" Margin="0,6,0,6" />
-                    <CheckBox Content="Show Online Basemap" Margin="4" IsChecked="{Binding ElementName=MyMapView, Path=Map.Layers[OnlineBasemap].IsVisible, Mode=TwoWay}" />
-                    <CheckBox Content="Show Local Basemap" Margin="4" IsChecked="{Binding ElementName=MyMapView, Path=Map.Layers[LocalTiles].IsVisible, Mode=TwoWay}" />
+                    <CheckBox Content="Show Online Basemap" Margin="4" IsChecked="{Binding ElementName=MyMapView, Path=Scene.Layers[OnlineBasemap].IsVisible, Mode=TwoWay}" />
+                    <CheckBox Content="Show Local Basemap" Margin="4" IsChecked="{Binding ElementName=MyMapView, Path=Scene.Layers[LocalTiles].IsVisible, Mode=TwoWay}" />
                     <CheckBox Content="Show Area of Interest" Margin="4" IsChecked="{Binding ElementName=MyMapView, Path=GraphicsOverlays[AOIOverlay].IsVisible}" />
                     <StackPanel Orientation="Horizontal" >
                         <Button x:Name="btnDeleteLocalLayer" Content="Delete local layer" Margin="4" Padding="4,0,4,0" FontSize="14" Click="btnDeleteLocalLayer_Click"/>

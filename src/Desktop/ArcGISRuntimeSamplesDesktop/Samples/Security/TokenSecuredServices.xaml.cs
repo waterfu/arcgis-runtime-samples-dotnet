@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using Esri.ArcGISRuntime.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -22,7 +24,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public TokenSecuredServices()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-17611013, 2601908, -2823071, 9287290, SpatialReferences.WebMercator)));
 			IdentityManager.Current.ChallengeHandler = new ChallengeHandler(Challenge);
         }
 

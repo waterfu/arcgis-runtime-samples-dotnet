@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid x:Name="layoutGrid">
-        <esri:MapView x:Name="MyMapView" WrapAround="True">
-            <esri:Map InitialViewpoint="-17611013,2601908,-2823071,9287290,3857">
+        <esri:SceneView x:Name="MyMapView" >
+            <esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer DisplayName="World Street Map - Public"
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
 
@@ -12,8 +12,8 @@
                 <esri:ArcGISDynamicMapServiceLayer ID="USA" DisplayName="USA - Secure"
                     ServiceUri="http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA_secure_user1/MapServer" />
 
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
         <!-- Login UI -->
         <Border x:Name="loginPanel"
@@ -68,7 +68,7 @@
                 HorizontalAlignment="Right" VerticalAlignment="Top">
             <StackPanel>
                 <TextBlock Text="Map Layers (with status)" Margin="4" FontSize="14" FontWeight="Bold" />
-                <ListView x:Name="listLayerStatus" Padding="6" ItemsSource="{Binding ElementName=MyMapView, Path=Map.Layers}">
+                <ListView x:Name="listLayerStatus" Padding="6" ItemsSource="{Binding ElementName=MyMapView, Path=Scene.Layers}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>

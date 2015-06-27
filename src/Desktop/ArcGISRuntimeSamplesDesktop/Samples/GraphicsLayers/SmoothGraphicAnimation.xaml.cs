@@ -3,11 +3,13 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -71,13 +73,14 @@ namespace ArcGISRuntime.Samples.Desktop
 
         private void AddOverlays()
         {
-			MyMapView.Map.Layers.Add(_userInteractionLayer);
-			MyMapView.Map.Layers.Add(_animatingLayer);
+			MyMapView.Scene.Layers.Add(_userInteractionLayer);
+			MyMapView.Scene.Layers.Add(_animatingLayer);
         }
 
         private async Task WaitforMapClick()
         {
-			MapPoint m = await MyMapView.Editor.RequestPointAsync();
+
+			MapPoint m = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
 
 			_userInteractionLayer.Graphics.Add(new Graphic(m));
 
