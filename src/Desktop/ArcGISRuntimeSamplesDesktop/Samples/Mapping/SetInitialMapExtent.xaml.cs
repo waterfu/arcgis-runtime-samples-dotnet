@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -15,6 +17,11 @@ namespace ArcGISRuntime.Samples.Desktop
 
 			// Note: uncomment the following to set the initial extent of the map in code.
 			//MyMapView.Map.InitialViewpoint = new Envelope(-117.182686,32.695853,-117.133872,32.718530, SpatialReferences.Wgs84);
+
+
+			//MySceneView.SetView(new Viewpoint(new Envelope(-117.182686, 32.695853, -117.133872, 32.718530, SpatialReferences.Wgs84)));
+
+			MySceneView.SetView(MyMapView.Map.InitialViewpoint);
         }
     }
 }

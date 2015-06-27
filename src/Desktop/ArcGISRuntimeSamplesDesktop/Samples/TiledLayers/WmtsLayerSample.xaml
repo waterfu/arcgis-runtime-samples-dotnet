@@ -3,11 +3,21 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid>
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <esri:MapView WrapAround="True">
             <esri:Map>
                 <esri:WmtsLayer ServiceUri="http://basemap.nationalmap.gov/arcgis/rest/services/USGSHydroNHD/MapServer/WMTS" />
             </esri:Map>
         </esri:MapView>
-
+        <esri:SceneView Grid.Column="1">
+            <esri:Scene>
+                <esri:WmtsLayer ServiceUri="http://basemap.nationalmap.gov/arcgis/rest/services/USGSHydroNHD/MapServer/WMTS" />
+            </esri:Scene>
+        </esri:SceneView>
     </Grid>
 </UserControl>

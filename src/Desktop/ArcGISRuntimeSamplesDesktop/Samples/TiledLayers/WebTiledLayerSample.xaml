@@ -4,13 +4,26 @@
 			 xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
 
     <Grid>
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <esri:MapView x:Name="MyMapView">
             <esri:Map InitialViewpoint="-9840712.566, 5094828.570, -9684169.532, 5187877.291, 102100">
                 <esri:WebTiledLayer ID="MyWebTiledLayer" TemplateUri="http://{subDomain}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{level}/{row}/{col}"
                     SubDomains="server, services" CopyrightText="National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC" />
             </esri:Map>
         </esri:MapView>
-
+        <esri:SceneView x:Name="MySceneView" Grid.Column="1">
+            <esri:Scene     >
+                <esri:WebTiledLayer ID="MyWebTiledLayer"
+                                    TemplateUri="http://{subDomain}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{level}/{row}/{col}"
+                                    SubDomains="server, services"
+                                    CopyrightText="National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC" />
+            </esri:Scene>
+        </esri:SceneView>
         <Border BorderBrush="Black" BorderThickness="1" Background="White" HorizontalAlignment="Right" 
                 VerticalAlignment="Top" Margin="30" Padding="20">
             <Grid>

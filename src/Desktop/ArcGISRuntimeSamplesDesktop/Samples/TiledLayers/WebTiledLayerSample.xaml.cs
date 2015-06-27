@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -18,7 +19,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public WebTiledLayerSample()
         {
             InitializeComponent();
-
+			MySceneView.SetView(MyMapView.Map.InitialViewpoint);
             MyMapView.SpatialReferenceChanged += MyMapView_SpatialReferenceChanged;
         }
 
@@ -33,6 +34,8 @@ namespace ArcGISRuntime.Samples.Desktop
                 return;
 
             MyMapView.Map.Layers.Remove("MyWebTiledLayer");
+
+	        MySceneView.Scene.Layers.Remove("MyWebTiledLayer");
 
             WebTiledLayer webTiledLayer = new WebTiledLayer() { ID = "MyWebTiledLayer" };
 
@@ -108,6 +111,8 @@ namespace ArcGISRuntime.Samples.Desktop
             }
 
             MyMapView.Map.Layers.Add(webTiledLayer);
+
+			MySceneView.Scene.Layers.Add(webTiledLayer);
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)

@@ -33,5 +33,17 @@ namespace ArcGISRuntime.Samples.Desktop
 			MapCoordsTextBlock.Text = string.Format("Map Coords: X = {0}, Y = {1}",
 					Math.Round(mapPoint.X, 4), Math.Round(mapPoint.Y, 4));
 		}
+
+	    private void MySceneView_MouseMove(object sender, MouseEventArgs e)
+	    {
+		    System.Windows.Point screenPoint = e.GetPosition(MySceneView);
+		    var sc = string.Format("Screen Coords: X = {0}, Y = {1}",
+			    screenPoint.X, screenPoint.Y);
+		    System.Diagnostics.Debug.WriteLine(sc);
+		    MapPoint mapPoint = MySceneView.ScreenToLocation(screenPoint);
+		    var mp = string.Format("Map Coords: X = {0}, Y = {1}",
+			    Math.Round(mapPoint.X, 4), Math.Round(mapPoint.Y, 4));
+		    System.Diagnostics.Debug.WriteLine(mp);
+	    }
 	}
 }

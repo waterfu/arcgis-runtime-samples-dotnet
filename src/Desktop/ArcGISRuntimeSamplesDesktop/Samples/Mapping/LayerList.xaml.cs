@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using Esri.ArcGISRuntime.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -22,19 +24,20 @@ namespace ArcGISRuntime.Samples.Desktop
 
 		public IEnumerable<Layer> LegendLayers
 		{
-			get { return MyMapView.Map.Layers.Reverse(); }
+			get { return MyMapView.Scene.Layers.Reverse(); }
 		}
 		
         public LayerList()
         {
             this.InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-13279586, 4010136, -12786147, 4280850,SpatialReferences.WebMercator)));
 			DataContext = this;
 		}
 
         private void RemoveLayerButton_Click(object sender, RoutedEventArgs e)
         {
             var layer = (sender as FrameworkElement).DataContext as Layer;
-            MyMapView.Map.Layers.Remove(layer);
+			MyMapView.Scene.Layers.Remove(layer);
 			OnPropertyChanged("LegendLayers");
 		}
 
@@ -85,16 +88,16 @@ namespace ArcGISRuntime.Samples.Desktop
                     Layer replaceLayer = lvItem.DataContext as Layer;
                     if (replaceLayer != null)
                     {
-                        int index = MyMapView.Map.Layers.IndexOf(replaceLayer);
+						int index = MyMapView.Scene.Layers.IndexOf(replaceLayer);
                         if (index >= 0)
                         {
-                            MyMapView.Map.Layers.Remove(moveLayer);
-                            MyMapView.Map.Layers.Insert(index, moveLayer);
+							MyMapView.Scene.Layers.Remove(moveLayer);
+							MyMapView.Scene.Layers.Insert(index, moveLayer);
                         }
                         else
                         {
-                            MyMapView.Map.Layers.Remove(moveLayer);
-                            MyMapView.Map.Layers.Add(moveLayer);
+							MyMapView.Scene.Layers.Remove(moveLayer);
+							MyMapView.Scene.Layers.Add(moveLayer);
                         }
 
 						OnPropertyChanged("LegendLayers");

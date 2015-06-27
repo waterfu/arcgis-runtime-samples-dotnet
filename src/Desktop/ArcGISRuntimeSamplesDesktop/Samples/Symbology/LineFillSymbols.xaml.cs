@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -21,14 +23,27 @@ namespace ArcGISRuntime.Samples.Desktop
 	{
 		private List<SampleSymbol> _symbols;
 		private GraphicsOverlay _graphicsOverlay;
+		private GraphicsOverlay _graphicsOverlay2;
 
 		/// <summary>Construct Line and Fill Symbols sample control</summary>
 		public LineFillSymbols()
 		{
 			InitializeComponent();
-
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
+			_graphicsOverlay2 = MySceneView.GraphicsOverlays["graphicsOverlay"];
+			MySceneView.CameraChanged += MySceneView_CameraChanged;
 			MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+		}
+		// Start map interaction
+		private async void MySceneView_CameraChanged(object sender, EventArgs e)
+		{
+			if (DataContext == null)
+				return;
+			MySceneView.CameraChanged -= MySceneView_CameraChanged;
+
+			//await SetupSymbolsAsync();
+			//DataContext = this;
+			await AcceptPointsAsync(MySceneView);
 		}
 
 		// Start map interaction
@@ -36,37 +51,53 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
 
+			MySceneView.SetView(new Viewpoint(MyMapView.Extent));
 			await SetupSymbolsAsync();
 			DataContext = this;
 
-			await AcceptPointsAsync();
+			await AcceptPointsAsync(MyMapView);
 		}
 
+		private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 		// Cancel current shape request when the symbol selection changes 
 		private async void symbolCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
+			
 			if (MyMapView.Editor.IsActive)
 				MyMapView.Editor.Cancel.Execute(null);
+			if (!cancellationTokenSource.IsCancellationRequested)
+				cancellationTokenSource.Cancel();
 
-			await AcceptPointsAsync();
+			await AcceptPointsAsync(MyMapView);
+			await AcceptPointsAsync(MySceneView);
 		}
 
 		// Accept user map clicks and add points to the graphics layer with the selected symbol
-		private async Task AcceptPointsAsync()
+		private async Task AcceptPointsAsync(Esri.ArcGISRuntime.Controls.ViewBase view)
 		{
 			try
 			{
-				while (MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry).TargetGeometry.Extent != null)
+				while (MyMapView.Extent != null)
 				{
 					SampleSymbol sampleSymbol = _symbols[symbolCombo.SelectedIndex];
 
 					Esri.ArcGISRuntime.Geometry.Geometry shape = null;
 					if (sampleSymbol.Symbol is LineSymbol)
-						shape = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polyline, sampleSymbol.Symbol);
+					{
+						if (view is SceneView)
+							shape = await SceneDrawHelper.DrawPolylineAsync(MySceneView, cancellationTokenSource.Token);
+						else
+							shape = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polyline, sampleSymbol.Symbol);
+					}
 					else
-						shape = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polygon, sampleSymbol.Symbol);
-
-					_graphicsOverlay.Graphics.Add(new Graphic(shape, sampleSymbol.Symbol));
+					{
+						if (view is SceneView)
+							shape = await SceneDrawHelper.DrawPolygonAsync(MySceneView, cancellationTokenSource.Token);
+						else
+							shape = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polygon, sampleSymbol.Symbol);
+					}
+					var layer = view is MapView ? _graphicsOverlay : _graphicsOverlay2;
+					layer.Graphics.Add(new Graphic(shape, sampleSymbol.Symbol));
 					await Task.Delay(100);
 				}
 			}

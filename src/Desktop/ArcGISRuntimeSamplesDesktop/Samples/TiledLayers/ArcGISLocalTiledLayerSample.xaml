@@ -3,10 +3,19 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid>
-        <esri:MapView>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <esri:MapView x:Name="MyMapView" ExtentChanged="MapView_ExtentChanged">
             <esri:Map>
                 <esri:ArcGISLocalTiledLayer Path="..\..\..\samples-data\basemaps\campus.tpk" />
             </esri:Map>
         </esri:MapView>
+        <esri:SceneView x:Name="MySceneView" Grid.Column="1">
+            <esri:Scene>
+                <esri:ArcGISLocalTiledLayer Path="..\..\..\samples-data\basemaps\campus.tpk" />
+            </esri:Scene>
+        </esri:SceneView>
     </Grid>
 </UserControl>

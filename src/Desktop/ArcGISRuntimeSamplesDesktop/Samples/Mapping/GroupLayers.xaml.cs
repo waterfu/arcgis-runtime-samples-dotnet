@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -12,6 +14,8 @@ namespace ArcGISRuntime.Samples.Desktop
         public GroupLayers()
         {
             InitializeComponent();
+
+			MyMapView.SetView(new Viewpoint(new Envelope(-13200000,4000000,-13000000,4150000, SpatialReferences.WebMercator)));
         }
     }
 }

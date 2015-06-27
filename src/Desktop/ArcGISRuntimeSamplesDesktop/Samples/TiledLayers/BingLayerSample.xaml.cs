@@ -31,6 +31,12 @@ namespace ArcGISRuntime.Samples.Desktop
                     layer.IsVisible = false;
             
             map1.Layers[layerNameTag].IsVisible = true;
+
+			foreach (Layer layer in scene1.Layers)
+				if (layer is BingLayer)
+					layer.IsVisible = false;
+
+			scene1.Layers[layerNameTag].IsVisible = true;
         }
 
         private void BingKeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -68,9 +74,11 @@ namespace ArcGISRuntime.Samples.Desktop
                             };
 
                             map1.Layers.Add(bingLayer);
+							scene1.Layers.Add(bingLayer);
                         }
 
-                        map1.Layers[0].IsVisible = true;
+						map1.Layers[0].IsVisible = true;
+						scene1.Layers[0].IsVisible = true;
 
                         BingKeyGrid.Visibility = System.Windows.Visibility.Collapsed;
                         LayerStyleGrid.Visibility = System.Windows.Visibility.Visible;

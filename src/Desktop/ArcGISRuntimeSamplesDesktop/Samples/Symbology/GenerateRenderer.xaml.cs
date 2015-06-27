@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Esri.ArcGISRuntime.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -24,11 +26,11 @@ namespace ArcGISRuntime.Samples.Desktop
         public GenerateRenderer()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-14131917.758914,5680423.82721854,-12669734.6418583,6341452.4447208, SpatialReferences.WebMercator)));
             var lineSymbol = new SimpleLineSymbol() { Color = Colors.Black, Width = 0.5 };
             _baseSymbol = new SimpleFillSymbol() { Color = Colors.Transparent, Outline = lineSymbol, Style = SimpleFillStyle.Solid };
 
-            MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+            MyMapView.CameraChanged += MyMapView_ExtentChanged;
         }
 
         // Load data - set initial renderer after the map has an extent and feature layer loaded
@@ -36,10 +38,10 @@ namespace ArcGISRuntime.Samples.Desktop
         {
             try
             {
-				MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+				MyMapView.CameraChanged -= MyMapView_ExtentChanged;
 
 				var table = featureLayer.FeatureTable as ServiceFeatureTable;
-				table.MaxAllowableOffset = MyMapView.UnitsPerPixel;
+				//table.MaxAllowableOffset = MyMapView.UnitsPerPixel;
 
 				await MyMapView.LayersLoadedAsync();
 

@@ -3,10 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid>
-        <esri:SceneView x:Name="MyMapView" >
-            <esri:Scene>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <esri:MapView x:Name="MyMapView" WrapAround="True" >
+            <esri:Map>
                 <esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
+            </esri:Map>
+        </esri:MapView>
+        <esri:SceneView x:Name="MySceneView" Grid.Column="1">
+            <esri:Scene>
+                <esri:ArcGISTiledMapServiceLayer ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
             </esri:Scene>
         </esri:SceneView>
 

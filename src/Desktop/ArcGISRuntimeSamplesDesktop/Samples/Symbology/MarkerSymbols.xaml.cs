@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -46,7 +45,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		// Accept user map clicks and add points to the graphics layer with the selected symbol
 		private async Task AcceptPointsAsync()
 		{
-			while (MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry).TargetGeometry.Extent != null)
+			while (MyMapView.Extent != null)
 			{
 				var point = await MyMapView.Editor.RequestPointAsync();
 				var layer = MySceneView.GraphicsOverlays["graphicsOverlay"];

@@ -1,4 +1,5 @@
-﻿using Esri.ArcGISRuntime.Controls;
+﻿using System.Threading.Tasks;
+using Esri.ArcGISRuntime.Controls;
 using Esri.ArcGISRuntime.Geometry;
 using System.Windows.Controls;
 
@@ -22,15 +23,13 @@ namespace ArcGISRuntime.Samples.Desktop
 
 		}
 
-		void MyMapView_SpatialReferenceChanged(object sender, System.EventArgs e)
+		async void MyMapView_SpatialReferenceChanged(object sender, System.EventArgs e)
 		{
+			await Task.Delay(500);
+			if (MyMapView.Camera == null)
+				return;
 			MyMapView.SpatialReferenceChanged -= MyMapView_SpatialReferenceChanged;
-
-			// Get current viewpoints extent from the MapView
-			var currentViewpoint = MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry);
-			var viewpointExtent = currentViewpoint.TargetGeometry.Extent;
-
-			var normalizedPoint = GeometryEngine.NormalizeCentralMeridian(viewpointExtent.GetCenter());
+			var normalizedPoint = GeometryEngine.NormalizeCentralMeridian(MyMapView.Camera.Location);
 			var projectedCenter = GeometryEngine.Project(normalizedPoint, SpatialReferences.Wgs84) as MapPoint;
 
 			if (!(clickOverlay.DataContext is MapPoint))

@@ -18,12 +18,19 @@ namespace ArcGISRuntime.Samples.Desktop
 
         private void RadioButton_Click(object sender, RoutedEventArgs e)
         {
-            MyMapView.Scene.Layers.RemoveAt(0);
-
-			MyMapView.Scene.Layers.Add(new ArcGISTiledMapServiceLayer()
-            {
-                ServiceUri = ((RadioButton)sender).Tag as string
-            });
+			var serviceUri = ((RadioButton)sender).Tag as string;
+			UpdateFirstLayer(MyMapView.Map.Layers, serviceUri);
+			UpdateFirstLayer(MySceneView.Scene.Layers, serviceUri);
         }
+
+	    private void UpdateFirstLayer(LayerCollection layers, string serviceUri)
+	    {
+			layers.RemoveAt(0);
+
+		    layers.Add(new ArcGISTiledMapServiceLayer()
+			{
+				ServiceUri = serviceUri
+			});
+	    }
     }
 }

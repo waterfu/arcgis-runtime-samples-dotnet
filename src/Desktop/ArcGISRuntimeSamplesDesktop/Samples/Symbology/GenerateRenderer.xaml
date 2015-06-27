@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid x:Name="layoutGrid">
-        <esri:MapView x:Name="MyMapView" WrapAround="True">
-			<esri:Map InitialViewpoint="-14131917.758914,5680423.82721854,-12669734.6418583,6341452.4447208">
+        <esri:SceneView x:Name="MyMapView" >
+			<esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer" />
 				<esri:ArcGISTiledMapServiceLayer
@@ -18,8 +18,8 @@
                             OutFields="POP2007,POP07_SQMI,WHITE,BLACK,AMERI_ES,ASIAN,HAWN_PI,OTHER,MULT_RACE,HISPANIC,STATE_NAME,NAME" />
                     </esri:FeatureLayer.FeatureTable>
                 </esri:FeatureLayer>
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="30" Padding="20"
                 HorizontalAlignment="Right" VerticalAlignment="Top">

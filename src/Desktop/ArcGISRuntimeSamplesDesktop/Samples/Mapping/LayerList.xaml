@@ -10,8 +10,8 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <esri:MapView x:Name="MyMapView" Grid.Column="1">
-			<esri:Map InitialViewpoint="-13279586, 4010136, -12786147, 4280850, 102100">
+        <esri:SceneView x:Name="MyMapView" Grid.Column="1">
+			<esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer DisplayName="Basemap"
 				    ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer" />
 
@@ -36,8 +36,8 @@
                             ServiceUri="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Fire/Sheep/FeatureServer/0" />
                     </esri:FeatureLayer.FeatureTable>
                 </esri:FeatureLayer>
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
         <Border Background="LightGray" BorderBrush="Black" BorderThickness="0,0,2,0">
             <Grid>

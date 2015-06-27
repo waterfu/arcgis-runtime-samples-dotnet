@@ -5,19 +5,19 @@
     xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
 
     <Grid x:Name="layoutRoot">
-        <esri:MapView x:Name="mapStreets" WrapAround="True">
-            <esri:Map>
+        <esri:SceneView x:Name="mapStreets" >
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
-        <esri:MapView x:Name="mapImagery" WrapAround="True" IsHitTestVisible="False">
-            <esri:Map>
+        <esri:SceneView x:Name="mapImagery"  IsHitTestVisible="False">
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer" />
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
 		<Thumb x:Name="thumb" Background="Blue" HorizontalAlignment="Left" Width="16" DragDelta="Thumb_DragDelta"/>
 

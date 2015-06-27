@@ -3,6 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <esri:MapView x:Name="MyMapView">
 			<esri:Map InitialViewpoint="-117.182686,32.695853,-117.133872,32.718530,4326">
 				<!-- Or -->
@@ -13,5 +17,14 @@
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
             </esri:Map>
         </esri:MapView>
+        <esri:SceneView x:Name="MySceneView" Grid.Column="1">
+            <esri:Scene >
+                <!-- Or -->
+                <!--<esri:Map.InitialViewpoint>
+					<esri:ViewpointExtent XMin="-117.182686" YMin="32.695853" XMax="-117.133872" YMax="32.718530" SpatialReferenceID="4326" />
+				</esri:Map.InitialViewpoint>-->
+                <esri:ArcGISTiledMapServiceLayer ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
+            </esri:Scene>
+        </esri:SceneView>
     </Grid>
 </UserControl>

@@ -12,15 +12,12 @@
 			<esri:SimpleMarkerSymbol x:Key="pop1000K" Color="#FFFB5107" Size="12" Style="Triangle" />
 		</Grid.Resources>
 
-		<esri:MapView x:Name="MyMapView" WrapAround="True">
-			<esri:Map>
-				<esri:Map.InitialViewpoint>
-					<esri:ViewpointExtent XMin="-15053000" YMin="2749000" XMax="-6540000" YMax="6590000" />
-				</esri:Map.InitialViewpoint>
+		<esri:SceneView x:Name="MyMapView" >
+			<esri:Scene>
 				<esri:ArcGISTiledMapServiceLayer
 					ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+			<esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="cities">
 					<esri:GraphicsOverlay.Renderer>
 						<esri:ClassBreaksRenderer Field="pop2000" >
@@ -35,8 +32,8 @@
 						</esri:ClassBreaksRenderer>
 					</esri:GraphicsOverlay.Renderer>
 				</esri:GraphicsOverlay>
-			</esri:MapView.GraphicsOverlays>
-		</esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+		</esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="30" Padding="20"
 				HorizontalAlignment="Right" VerticalAlignment="Top">

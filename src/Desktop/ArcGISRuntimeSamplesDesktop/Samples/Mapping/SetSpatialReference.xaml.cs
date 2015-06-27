@@ -15,6 +15,8 @@ namespace ArcGISRuntime.Samples.Desktop
             InitializeComponent();
 		
 			MyMapView.Map.SpatialReference = SpatialReference.Create(26777); //Force map spatial reference to Wkid=26777
+
+			MySceneView.SetView(MyMapView.Map.InitialViewpoint);
         }
     }
 }

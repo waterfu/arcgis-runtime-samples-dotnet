@@ -21,7 +21,7 @@ namespace ArcGISRuntime.Samples.Desktop
             thumb.RenderTransform = new TranslateTransform() { X = 0, Y = 0 };
             mapImagery.Clip = new RectangleGeometry() { Rect = new Rect(0, 0, 0, 0) };
 
-            mapStreets.ExtentChanged += mapStreets_ExtentChanged;
+			mapStreets.CameraChanged += mapStreets_ExtentChanged;
         }
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
@@ -42,8 +42,8 @@ namespace ArcGISRuntime.Samples.Desktop
         {
             try
             {
-                if (mapImagery.Extent != null)
-                    mapImagery.SetView(mapStreets.Extent);
+                if (mapImagery.Camera != null)
+                    mapImagery.SetView(mapStreets.Camera);
             }
             catch (Exception ex)
             {

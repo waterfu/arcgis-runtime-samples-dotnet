@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -26,18 +27,19 @@ namespace ArcGISRuntime.Samples.Desktop
 		public ClassBreaksRendererSample()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(MapExtent));
 			_cities = MyMapView.GraphicsOverlays["cities"];
 
-			MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+			MyMapView.CameraChanged += MyMapView_ExtentChanged;
 		}
 
+		private Envelope MapExtent = new Envelope(-15053000, 2749000, -6540000, 6590000, SpatialReferences.WebMercator);
 		// Load earthquake data
 		private async void MyMapView_ExtentChanged(object sender, EventArgs e)
 		{
 			try
 			{
-				MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+				MyMapView.CameraChanged -= MyMapView_ExtentChanged;
 				await LoadUSACitiesAsync();
 			}
 			catch (Exception ex)
@@ -71,12 +73,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			var queryTask = new QueryTask(
 				new Uri("http://sampleserver6.arcgisonline.com/ArcGIS/rest/services/USA/MapServer/0"));
-
-            // Get current viewpoints extent from the MapView
-            var currentViewpoint = MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry);
-            var viewpointExtent = currentViewpoint.TargetGeometry.Extent;
-
-			var query = new Query(viewpointExtent)
+			var query = new Query(MapExtent)
 			{
 				ReturnGeometry = true,
 				OutSpatialReference = MyMapView.SpatialReference,
