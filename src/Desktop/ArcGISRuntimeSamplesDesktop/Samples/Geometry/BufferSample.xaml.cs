@@ -40,6 +40,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
 				// Convert screen point to map point
 				var point = e.Location;
+				point = (MapPoint)GeometryEngine.Project(point, SpatialReferences.WebMercator);
 				var buffer = GeometryEngine.Buffer(point, 5 * MILES_TO_METERS);
 
 				var bufferGraphic = new Graphic { Geometry = buffer, Symbol = _bufferSymbol };

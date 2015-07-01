@@ -35,7 +35,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 var point = MyMapView.ScreenToLocation(e.GetPosition(MyMapView));
                 if (point == null)
                     return;
-
+	            point = (MapPoint) GeometryEngine.Project(point, SpatialReferences.WebMercator);
                 var buffer = GeometryEngine.GeodesicBuffer(
 					GeometryEngine.NormalizeCentralMeridian(point), //Normalize in case we we're too far west/east of the world bounds
                     500, LinearUnits.Miles);

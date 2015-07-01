@@ -45,15 +45,15 @@ namespace ArcGISRuntime.Samples.Desktop
                     // Get the current AutoPanMode setting as it is automatically disabled when calling MyMapView.SetView().
                     var PanMode = MyMapView.LocationDisplay.AutoPanMode;
 
-                    MyMapView.SetRotation(0);
-                    await MyMapView.SetViewAsync(MyMapView.LocationDisplay.CurrentLocation.Location);
+					//MyMapView.SetRotation(0);
+                    await MyMapView.SetViewAsync(new Viewpoint(MyMapView.LocationDisplay.CurrentLocation.Location));
 
                     // Reset the AutoPanMode 
                     MyMapView.LocationDisplay.AutoPanMode = PanMode;
                 }
                 else
                 {
-                    var viewpoint = new Viewpoint(MyMapView.Map.Layers[0].FullExtent) { Rotation = 0.0 };
+                    var viewpoint = new Viewpoint(MyMapView.Scene.Layers[0].FullExtent) { Rotation = 0.0 };
                     await MyMapView.SetViewAsync(viewpoint);
                 }
             }

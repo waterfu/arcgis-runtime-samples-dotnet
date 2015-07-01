@@ -44,7 +44,7 @@ namespace ArcGISRuntime.Samples.Desktop
             {
                 // Wait for user to draw
 				var geom = await SceneDrawHelper.DrawPolygonAsync(MyMapView, cancellationTokenSource.Token);
-
+	            geom = (Polygon) GeometryEngine.Project(geom, SpatialReferences.WebMercator);
                 // show geometry on map
 				_graphicsOverlay.Graphics.Clear();
 

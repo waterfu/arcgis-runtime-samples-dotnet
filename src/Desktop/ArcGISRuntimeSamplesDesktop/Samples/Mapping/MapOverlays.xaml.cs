@@ -40,6 +40,8 @@ namespace ArcGISRuntime.Samples.Desktop
 
 		private void MyMapView_MapViewTapped(object sender, MapViewInputEventArgs e)
 		{
+			if (e.Location == null)
+				return;
 			var normalizedPoint = GeometryEngine.NormalizeCentralMeridian(e.Location);
 			var projectedCenter = GeometryEngine.Project(normalizedPoint, SpatialReferences.Wgs84) as MapPoint;
 			clickOverlay.DataContext = projectedCenter;

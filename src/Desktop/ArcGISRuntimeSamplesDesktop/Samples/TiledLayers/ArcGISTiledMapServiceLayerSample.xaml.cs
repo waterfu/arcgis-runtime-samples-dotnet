@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -14,5 +15,11 @@ namespace ArcGISRuntime.Samples.Desktop
         {
             InitializeComponent();
         }
+
+		private void MapView_ExtentChanged(object sender, System.EventArgs e)
+		{
+			var mapView = (MapView) sender;
+			MySceneView.SetView(new Viewpoint(mapView.Extent));
+		}
     }
 }

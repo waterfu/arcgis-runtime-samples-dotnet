@@ -7,13 +7,13 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <esri:MapView>
+        <esri:MapView ExtentChanged="MapView_ExtentChanged">
             <esri:Map>
                 <esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
             </esri:Map>
         </esri:MapView>
-        <esri:SceneView Grid.Column="1">
+        <esri:SceneView x:Name="MySceneView"  Grid.Column="1">
             <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
             </esri:Scene>

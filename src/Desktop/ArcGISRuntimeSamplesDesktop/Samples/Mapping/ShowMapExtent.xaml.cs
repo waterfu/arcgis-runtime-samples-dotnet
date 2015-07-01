@@ -67,5 +67,10 @@ namespace ArcGISRuntime.Samples.Desktop
 			MaxXNormalized.Text = newExtent.XMax.ToString("0.000");
 			MaxYNormalized.Text = newExtent.YMax.ToString("0.000");
 		}
+
+		private void SceneView_CameraChanged(object sender, EventArgs e)
+		{
+            System.Diagnostics.Debug.WriteLine(MySceneView.Camera.Location);
+		}
 	}
 }

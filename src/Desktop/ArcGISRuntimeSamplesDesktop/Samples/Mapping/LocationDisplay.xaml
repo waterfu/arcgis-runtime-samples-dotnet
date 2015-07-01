@@ -2,13 +2,17 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013">
+    <UserControl.Resources>
+        <esri:LocationDisplay x:Key="LocationDisplay"/>
+    </UserControl.Resources>
     <Grid>
-        <esri:MapView x:Name="MyMapView" WrapAround="True">
-            <esri:Map>
+        <esri:SceneView x:Name="MyMapView"
+                        LocationDisplay="{StaticResource LocationDisplay}">
+            <esri:Scene>
                 <esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
-            </esri:Map>
-        </esri:MapView>
+            </esri:Scene>
+        </esri:SceneView>
 
         <Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Left" VerticalAlignment="Top"
