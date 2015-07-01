@@ -212,7 +212,7 @@ namespace TestApp.Desktop
 				view.SceneViewTapped += tappedHandler;
 			}
 			EventHandler<MapViewInputEventArgs> doubletappedHandler = null;
-			if (onTapped != null)
+			if (onDoubleTapped != null)
 			{
 				doubletappedHandler = (s, e) => { e.Handled = true; onDoubleTapped(e.Location); };
 				view.SceneViewDoubleTapped += doubletappedHandler;

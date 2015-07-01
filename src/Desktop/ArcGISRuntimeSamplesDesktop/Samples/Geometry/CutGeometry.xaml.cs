@@ -5,9 +5,11 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -29,7 +31,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public CutGeometry()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-15053000,2749000,-6540000,6590000, SpatialReferences.WebMercator)));
             _cutLineSymbol = layoutGrid.Resources["CutLineSymbol"] as Symbol;
             _cutFillSymbol = layoutGrid.Resources["CutFillSymbol"] as Symbol;
 			_resultGraphicsOverlay = MyMapView.GraphicsOverlays["resultsOverlay"];
@@ -46,7 +48,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
                 var table = gdb.FeatureTables.First(ft => ft.Name == "US-States");
                 _statesLayer = new FeatureLayer() { ID = table.Name, FeatureTable = table };
-                MyMapView.Map.Layers.Add(_statesLayer);
+                MyMapView.Scene.Layers.Add(_statesLayer);
             }
             catch (Exception ex)
             {
@@ -62,7 +64,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				_resultGraphicsOverlay.Graphics.Clear();
 
                 // wait for user to draw cut line
-                var cutLine = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polyline, _cutLineSymbol) as Polyline;
+	            var cutLine = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
+	            cutLine = (Polyline) GeometryEngine.Project(cutLine, SpatialReferences.WebMercator);
 
 				Polyline polyline = GeometryEngine.NormalizeCentralMeridian(cutLine) as Polyline;
 

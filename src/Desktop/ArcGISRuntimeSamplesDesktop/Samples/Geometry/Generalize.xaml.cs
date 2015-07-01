@@ -28,7 +28,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public Generalize()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-12000000, 3000000, -7000000, 7000000,SpatialReferences.WebMercator)));
 			MyMapView.NavigationCompleted += MyMapView_NavigationCompleted;
 
 			_originalGraphicsOverlay = MyMapView.GraphicsOverlays["originalOverlay"];
@@ -53,7 +53,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
                     Query query = new Query("NAME = 'Mississippi'");
                     query.ReturnGeometry = true;
-                    query.OutSpatialReference = MyMapView.SpatialReference;
+	                query.OutSpatialReference = SpatialReferences.WebMercator;
 
                     var results = await queryTask.ExecuteAsync(query);
 

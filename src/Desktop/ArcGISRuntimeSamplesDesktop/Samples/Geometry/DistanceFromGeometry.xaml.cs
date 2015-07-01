@@ -3,8 +3,10 @@ using Esri.ArcGISRuntime.Geometry;
 using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -25,7 +27,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public DistanceFromGeometry()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-15053000,2749000,-6540000,6590000, SpatialReferences.WebMercator)));
             _lineSymbol = layoutGrid.Resources["LineSymbol"] as Symbol;
             _pointSymbol = layoutGrid.Resources["PointSymbol"] as Symbol;
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
@@ -40,11 +42,13 @@ namespace ArcGISRuntime.Samples.Desktop
 				_graphicsOverlay.Graphics.Clear();
 
                 // wait for user to draw a polyline
-                var line = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polyline, _lineSymbol);
+	            var line = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
+	            line = (Polyline) GeometryEngine.Project(line, SpatialReferences.WebMercator);
 				_graphicsOverlay.Graphics.Add(new Graphic(line, _lineSymbol));
 
                 // wait for user to draw a point
-                var point = await MyMapView.Editor.RequestPointAsync();
+				var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+				point = (MapPoint)GeometryEngine.Project(point, SpatialReferences.WebMercator);
 				_graphicsOverlay.Graphics.Add(new Graphic(point, _pointSymbol));
 
                 // Calculate distance between line and point

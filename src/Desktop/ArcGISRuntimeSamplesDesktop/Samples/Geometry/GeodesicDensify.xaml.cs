@@ -5,9 +5,11 @@ using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -33,7 +35,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public GeodesicDensify()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-15000000, 2000000, -7000000, 8000000, SpatialReferences.WebMercator)));
 			_lineSymbol = layoutGrid.Resources["LineSymbol"] as Symbol;
 			_fillSymbol = layoutGrid.Resources["FillSymbol"] as Symbol;
 			_origVertexSymbol = layoutGrid.Resources["OrigVertexSymbol"] as Symbol;
@@ -59,9 +61,12 @@ namespace ArcGISRuntime.Samples.Desktop
 				Symbol symbolToUse = _lineSymbol;
 				if (drawShape == DrawShape.Polygon)
 					symbolToUse = _fillSymbol;
-
-				var original = await MyMapView.Editor.RequestShapeAsync(drawShape, symbolToUse);
-
+				Geometry original = null;
+				if (drawShape == DrawShape.Polyline)
+					original = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
+				else
+					original = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+				original = GeometryEngine.Project(original, SpatialReferences.WebMercator);
 				// Account for WrapAround
 				var normalized = GeometryEngine.NormalizeCentralMeridian(original);
 

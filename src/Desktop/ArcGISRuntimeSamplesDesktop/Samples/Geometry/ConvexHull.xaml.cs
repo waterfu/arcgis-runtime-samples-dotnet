@@ -50,7 +50,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				await MyMapView.LayersLoadedAsync();
 
 				var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
-
+				point = (MapPoint) GeometryEngine.Project(point, SpatialReferences.WebMercator);
 				// reset graphics layers if we've already created a convex hull polygon
 				if (_convexHullGraphicsOverlay.Graphics.Count > 0)
 				{

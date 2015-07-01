@@ -10,16 +10,16 @@
             <esri:SimpleLineSymbol x:Key="GeneralizedLineSymbol" Color="#AA00FFFF" Width="2"/>
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" WrapAround="True">
-			<esri:Map InitialViewpoint="-12000000,3000000,-7000000,7000000,3857">
+        <esri:SceneView x:Name="MyMapView" >
+			<esri:Scene >
 				<esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+			<esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="originalOverlay" />
 				<esri:GraphicsOverlay ID="generalizedLineOverlay" />
-			</esri:MapView.GraphicsOverlays>
-		</esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+		</esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Right" VerticalAlignment="Top"

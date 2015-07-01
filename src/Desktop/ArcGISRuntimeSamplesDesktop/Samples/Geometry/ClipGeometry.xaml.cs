@@ -62,6 +62,7 @@ namespace ArcGISRuntime.Samples.Desktop
             {
 				_clippedGraphicsOverlay.Graphics.Clear();
 				var r = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+	            r = (Polygon) GeometryEngine.Project(r, SpatialReferences.WebMercator);
                 // wait for user to draw clip rect
 	            var rect = r.Extent;
 

@@ -5,8 +5,10 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -27,7 +29,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public Difference()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-15053000, 2749000, -6540000, 6590000, SpatialReferences.WebMercator)));
             _fillSymbol = layoutGrid.Resources["FillSymbol"] as Symbol;
 			_differenceGraphics = MyMapView.GraphicsOverlays["resultsOverlay"];
             CreateFeatureLayers();
@@ -42,7 +44,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
                 var table = gdb.FeatureTables.First(ft => ft.Name == "US-States");
                 _statesLayer = new FeatureLayer() { ID = table.Name, FeatureTable = table };
-                MyMapView.Map.Layers.Add(_statesLayer);
+                MyMapView.Scene.Layers.Add(_statesLayer);
             }
             catch (Exception ex)
             {
@@ -58,7 +60,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				_differenceGraphics.Graphics.Clear();
 
                 // wait for user to draw difference polygon
-                Polygon userpoly = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polygon) as Polygon;
+	            Polygon userpoly = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+	            userpoly =(Polygon) GeometryEngine.Project(userpoly, SpatialReferences.WebMercator);
 
 				// Take account of WrapAround
 				Polygon poly = GeometryEngine.NormalizeCentralMeridian(userpoly) as Polygon;

@@ -4,8 +4,10 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -27,7 +29,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public Densify()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-15000000, 2000000, -7000000, 8000000, SpatialReferences.WebMercator)));
 			_polySymbol = layoutGrid.Resources["PolySymbol"] as Symbol;
 			_origVertexSymbol = layoutGrid.Resources["OrigVertexSymbol"] as Symbol;
 			_newVertexSymbol = layoutGrid.Resources["NewVertexSymbol"] as Symbol;
@@ -45,7 +47,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				_resultsOverlay.Graphics.Clear();
 
 				// Request polygon from the user
-				var poly = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polygon, _polySymbol) as Polygon;
+				var poly = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+				poly = (Polygon) GeometryEngine.Project(poly, SpatialReferences.WebMercator);
 
 				// Add original polygon and vertices to input graphics layer
 				_inputOverlay.Graphics.Add(new Graphic(poly, _polySymbol));
@@ -56,7 +59,8 @@ namespace ArcGISRuntime.Samples.Desktop
 
                 // Get current viewpoints extent from the MapView
                 var currentViewpoint = MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry);
-                var viewpointExtent = currentViewpoint.TargetGeometry.Extent;
+				var geometry  = GeometryEngine.Project(currentViewpoint.TargetGeometry, SpatialReferences.WebMercator);
+				var viewpointExtent = geometry.Extent;
 
 				// Densify the polygon
 				var densify = GeometryEngine.Densify(poly, viewpointExtent.Width / 100) as Polygon;
