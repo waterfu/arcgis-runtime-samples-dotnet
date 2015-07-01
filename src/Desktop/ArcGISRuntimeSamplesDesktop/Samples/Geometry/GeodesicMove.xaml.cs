@@ -4,9 +4,11 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -30,21 +32,21 @@ namespace ArcGISRuntime.Samples.Desktop
 			_originalOverlay = MyMapView.GraphicsOverlays["originalOverlay"];
 			_movedOverlay = MyMapView.GraphicsOverlays["movedOverlay"];
 
-            MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+            MyMapView.CameraChanged += MyMapView_ExtentChanged;
         }
 
         // Start map interaction once the mapview extent is set
         private async void MyMapView_ExtentChanged(object sender, EventArgs e)
         {
-            MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+			MyMapView.CameraChanged -= MyMapView_ExtentChanged;
 
-            MyMapView.Editor.EditorConfiguration.MidVertexSymbol = null;
-            MyMapView.Editor.EditorConfiguration.VertexSymbol = null;
-            MyMapView.Editor.EditorConfiguration.SelectedVertexSymbol = new SimpleMarkerSymbol() 
-			{ 
-				Color = System.Windows.Media.Colors.Blue, 
-				Size = 6 
-			};
+			//MyMapView.Editor.EditorConfiguration.MidVertexSymbol = null;
+			//MyMapView.Editor.EditorConfiguration.VertexSymbol = null;
+			//MyMapView.Editor.EditorConfiguration.SelectedVertexSymbol = new SimpleMarkerSymbol() 
+			//{ 
+			//	Color = System.Windows.Media.Colors.Blue, 
+			//	Size = 6 
+			//};
 
             await AcceptUserPolygonAsync();
         }
@@ -63,7 +65,8 @@ namespace ArcGISRuntime.Samples.Desktop
                 _movedOverlay.Graphics.Clear();
 				_originalOverlay.Graphics.Clear();
 
-                var polygon = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polygon, _origSymbol);
+	            var polygon = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+	            polygon = (Polygon) GeometryEngine.Project(polygon, SpatialReferences.WebMercator);
 
 				_originalOverlay.Graphics.Add(new Graphic(polygon));
             }
@@ -91,7 +94,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 var azimuth = (double)sliderAngle.Value;
                 var movedPoints = GeometryEngine.GeodesicMove(points, distance, LinearUnits.Miles, azimuth);
 
-                Polygon movedPoly = new Polygon(movedPoints, MyMapView.SpatialReference);
+                Polygon movedPoly = new Polygon(movedPoints,SpatialReferences.WebMercator);
 				_movedOverlay.Graphics.Clear();
 				_movedOverlay.Graphics.Add(new Graphic(movedPoly));
             }

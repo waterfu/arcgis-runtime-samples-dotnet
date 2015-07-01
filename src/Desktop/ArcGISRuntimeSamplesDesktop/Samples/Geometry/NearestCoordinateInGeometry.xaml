@@ -7,12 +7,12 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         </Grid.Resources>
         
-        <esri:MapView x:Name="MyMapView" WrapAround="True">
-			<esri:Map InitialViewpoint="-83.3188395774275,42.61428312652851,-83.31295664068958,42.61670913269855,4326">
+        <esri:SceneView x:Name="MyMapView">
+			<esri:Scene>
 				<esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="graphicsOverlay">
 					<esri:GraphicsOverlay.Renderer>
 						<esri:SimpleRenderer>
@@ -48,8 +48,8 @@
 						</esri:SimpleRenderer>
 					</esri:GraphicsOverlay.Renderer>
 				</esri:GraphicsOverlay>
-			</esri:MapView.GraphicsOverlays>
-        </esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+        </esri:SceneView>
 		
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				 HorizontalAlignment="Right" VerticalAlignment="Top"

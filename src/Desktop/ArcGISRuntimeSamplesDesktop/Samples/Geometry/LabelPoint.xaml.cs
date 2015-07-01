@@ -3,9 +3,11 @@ using Esri.ArcGISRuntime.Geometry;
 using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -23,7 +25,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public LabelPoint()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-15053000, 2749000, -6540000, 6590000, SpatialReferences.WebMercator)));
 			_labelOverlay = MyMapView.GraphicsOverlays["labelGraphicOverlay"];
 
 			MyMapView.SpatialReferenceChanged += MyMapView_SpatialReferenceChanged;
@@ -61,11 +63,13 @@ namespace ArcGISRuntime.Samples.Desktop
 
 				while (MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry).TargetGeometry.Extent != null)
 				{
-					if (MyMapView.Editor.IsActive)
-						MyMapView.Editor.Cancel.Execute(null);
+					//if (MyMapView.Editor.IsActive)
+					//	MyMapView.Editor.Cancel.Execute(null);
 
 					//Get the input polygon geometry from the user
-					var poly = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polygon, ((SimpleRenderer)_labelOverlay.Renderer).Symbol);
+					var poly = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+					poly = (Polygon) GeometryEngine.Project(poly, SpatialReferences.WebMercator);
+					poly = (Polygon)GeometryEngine.NormalizeCentralMeridian(poly);
 					if (poly != null)
 					{
 						//Add the polygon drawn by the user

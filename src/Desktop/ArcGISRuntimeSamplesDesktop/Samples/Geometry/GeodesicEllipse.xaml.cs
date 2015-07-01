@@ -3,9 +3,11 @@ using Esri.ArcGISRuntime.Geometry;
 using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -37,8 +39,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				while (MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry).TargetGeometry.Extent != null)
 				{
 					// Accept user point
-					MapPoint userpoint = await MyMapView.Editor.RequestPointAsync() as MapPoint;
-
+					MapPoint userpoint = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+					userpoint = (MapPoint) GeometryEngine.Project(userpoint, SpatialReferences.WebMercator);
 					MapPoint point = GeometryEngine.NormalizeCentralMeridian(userpoint) as MapPoint;
 
 					// create the geodesic ellipse

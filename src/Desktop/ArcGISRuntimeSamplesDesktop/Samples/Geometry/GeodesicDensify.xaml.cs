@@ -77,7 +77,8 @@ namespace ArcGISRuntime.Samples.Desktop
 
                 // Get current viewpoints extent from the MapView
                 var currentViewpoint = MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry);
-                var viewpointExtent = currentViewpoint.TargetGeometry.Extent;
+				var geom = GeometryEngine.Project(currentViewpoint.TargetGeometry, SpatialReferences.WebMercator);
+				var viewpointExtent = geom.Extent;
 
 				// Densify the shape
 				var densify = GeometryEngine.GeodesicDensify(normalized, viewpointExtent.Width / 100, LinearUnits.Meters);
@@ -88,9 +89,14 @@ namespace ArcGISRuntime.Samples.Desktop
 					_inputOverlay.Graphics.Add(new Graphic(densify, _lineSymbol));
 
 				// Add new vertices to result graphics layer
-				var coordsDensify = (densify as Multipart).Parts.First().GetPoints();
-				foreach (var mapPoint in coordsDensify)
-					_resultsOverlay.Graphics.Add(new Graphic(mapPoint, _newVertexSymbol));
+				int coordsDensifyCount = 0;
+				foreach (var part in ((Multipart) densify).Parts)
+				{
+					var coordsDensify = part.GetPoints();
+					coordsDensifyCount += coordsDensify.Count();
+					foreach (var mapPoint in coordsDensify)
+						_resultsOverlay.Graphics.Add(new Graphic(mapPoint, _newVertexSymbol));
+				}
 
 				// Results
 				Dictionary<string, object> results = new Dictionary<string, object>();
@@ -100,7 +106,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				else
 					results["Area"] = "N/A";
 				results["Vertices Before"] = coordsOriginal.Count();
-				results["Vertices After"] = coordsDensify.Count();
+				results["Vertices After"] = coordsDensifyCount;
 
 				resultsListView.ItemsSource = results;
 				resultsPanel.Visibility = Visibility.Visible;

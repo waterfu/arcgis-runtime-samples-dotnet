@@ -5,10 +5,12 @@ using Esri.ArcGISRuntime.Symbology;
 using Esri.ArcGISRuntime.Tasks.Query;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -29,7 +31,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public NearestCoordinateInGeometry()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-83.3188395774275, 42.61428312652851, -83.31295664068958, 42.61670913269855, SpatialReferences.Wgs84)));
 			_vertexSymbol = new SimpleMarkerSymbol() { Color = Colors.LightGreen, Size = 8, Style = SimpleMarkerStyle.Circle };
 			_userPointSymbol = new SimpleMarkerSymbol() { Color = Colors.Black, Size = 10, Style = SimpleMarkerStyle.Circle };
 
@@ -78,8 +80,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				txtResult.Visibility = Visibility.Collapsed;
 				txtResult.Text = string.Empty;
 
-				if (MyMapView.Editor.IsActive)
-					MyMapView.Editor.Cancel.Execute(null);
+				//if (MyMapView.Editor.IsActive)
+				//	MyMapView.Editor.Cancel.Execute(null);
 
 				if (!isTargetSelected)
 				{
@@ -109,8 +111,8 @@ namespace ArcGISRuntime.Samples.Desktop
 
 			var query = new Query(viewpointExtent)
 			{ 
-				ReturnGeometry = true, 
-				OutSpatialReference = MyMapView.SpatialReference, 
+				ReturnGeometry = true,
+				OutSpatialReference = SpatialReferences.WebMercator, 
 				OutFields = OutFields.All 
 			};
 			var result = await queryTask.ExecuteAsync(query);
@@ -129,7 +131,8 @@ namespace ArcGISRuntime.Samples.Desktop
 			Graphic graphic = null;
 			while (graphic == null)
 			{
-				var point = await MyMapView.Editor.RequestPointAsync();
+				var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+				point = (MapPoint)GeometryEngine.Project(point, SpatialReferences.WebMercator);
 
 				graphic = await _graphicsOverlay.HitTestAsync(MyMapView, MyMapView.LocationToScreen(point));
 				if (graphic == null)
@@ -153,7 +156,8 @@ namespace ArcGISRuntime.Samples.Desktop
 				return;
 
 			txtInstruct.Text = "Click the map to find the nearest coordinate in the selected geometry";
-			var point = await MyMapView.Editor.RequestPointAsync();
+			var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+			point = (MapPoint) GeometryEngine.Project(point, SpatialReferences.WebMercator);
 
 			ProximityResult result = null;
 			if (vertexOnly)
