@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -25,7 +26,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public Offset()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-9275076, 5253226, -9274274, 5253886, SpatialReferences.WebMercator)));
 			_parcelOverlay = MyMapView.GraphicsOverlays["ParcelsGraphicsOverlay"];
 			_offsetOverlay = MyMapView.GraphicsOverlays["OffsetGraphicsOverlay"];
 
@@ -61,7 +62,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				ResetButton.IsEnabled = false;
 				_offsetOverlay.Graphics.Clear();
 
-				var pointGeom = await MyMapView.Editor.RequestPointAsync();
+				var pointGeom = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
 				var screenPnt = MyMapView.LocationToScreen(pointGeom);
 
 				_selectedParcelGraphic = await

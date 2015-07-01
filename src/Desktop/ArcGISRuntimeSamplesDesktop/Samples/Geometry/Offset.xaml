@@ -10,12 +10,12 @@
             </Style>
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" LayerLoaded="MyMapView_LayerLoaded">
-			<esri:Map InitialViewpoint="-9275076, 5253226, -9274274, 5253886, 102100">
+        <esri:SceneView x:Name="MyMapView" LayerLoaded="MyMapView_LayerLoaded">
+			<esri:Scene >
 				<esri:ArcGISTiledMapServiceLayer ID="StreetMapLayer"
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="ParcelsGraphicsOverlay" Opacity="0.3" >
 					<esri:GraphicsOverlay.Renderer>
 						<esri:SimpleRenderer>
@@ -38,8 +38,8 @@
 						</esri:SimpleRenderer>
 					</esri:GraphicsOverlay.Renderer>
 				</esri:GraphicsOverlay>
-			</esri:MapView.GraphicsOverlays>
-        </esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+        </esri:SceneView>
 
         <Border Background="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30" Padding="20">
             <StackPanel Orientation="Vertical">

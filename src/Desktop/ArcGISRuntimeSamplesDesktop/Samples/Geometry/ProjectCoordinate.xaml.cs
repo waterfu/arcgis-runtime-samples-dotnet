@@ -2,9 +2,11 @@
 using Esri.ArcGISRuntime.Geometry;
 using Esri.ArcGISRuntime.Layers;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -23,7 +25,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			InitializeComponent();
 		
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"]; 
-			MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+			MyMapView.CameraChanged += MyMapView_ExtentChanged;
 		}
 
 		// Start map interaction
@@ -31,7 +33,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			try
 			{
-				MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+				MyMapView.CameraChanged -= MyMapView_ExtentChanged;
 				await AcceptPointsAsync();
 			}
 			catch (Exception ex)
@@ -46,8 +48,8 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			while (MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry).TargetGeometry.Extent != null)
 			{
-				var point = await MyMapView.Editor.RequestPointAsync();
-
+				var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+				point = (MapPoint)GeometryEngine.Project(point, SpatialReferences.WebMercator);
 				_graphicsOverlay.Graphics.Clear();
 				_graphicsOverlay.Graphics.Add(new Graphic(point));
 

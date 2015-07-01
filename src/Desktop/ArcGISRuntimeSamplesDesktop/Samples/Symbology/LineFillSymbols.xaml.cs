@@ -43,7 +43,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
 			//await SetupSymbolsAsync();
 			//DataContext = this;
-			await AcceptPointsAsync(MySceneView);
+			//AcceptPointsAsync(MySceneView);
 		}
 
 		// Start map interaction
@@ -55,21 +55,20 @@ namespace ArcGISRuntime.Samples.Desktop
 			await SetupSymbolsAsync();
 			DataContext = this;
 
-			await AcceptPointsAsync(MyMapView);
+			//AcceptPointsAsync(MyMapView);
 		}
 
 		private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 		// Cancel current shape request when the symbol selection changes 
-		private async void symbolCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void symbolCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			
 			if (MyMapView.Editor.IsActive)
 				MyMapView.Editor.Cancel.Execute(null);
-			if (!cancellationTokenSource.IsCancellationRequested)
-				cancellationTokenSource.Cancel();
+		
 
-			await AcceptPointsAsync(MyMapView);
-			await AcceptPointsAsync(MySceneView);
+			AcceptPointsAsync(MyMapView);
+			AcceptPointsAsync(MySceneView);
 		}
 
 		// Accept user map clicks and add points to the graphics layer with the selected symbol

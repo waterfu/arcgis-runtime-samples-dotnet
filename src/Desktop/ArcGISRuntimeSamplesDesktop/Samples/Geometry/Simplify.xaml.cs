@@ -25,7 +25,7 @@ namespace ArcGISRuntime.Samples.Desktop
 		public Simplify()
 		{
 			InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-9270434.248, 5246977.326, -9269261.417, 5247569.712, SpatialReferences.WebMercator)));
 			_parcelOverlay = MyMapView.GraphicsOverlays["parcelOverlay"];
 			_polygonOverlay = MyMapView.GraphicsOverlays["polygonOverlay"];
 
@@ -57,7 +57,8 @@ namespace ArcGISRuntime.Samples.Desktop
 		{
 			// Get current viewpoints extent from the MapView
 			var currentViewpoint = MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry);
-			var viewpointExtent = currentViewpoint.TargetGeometry.Extent; 
+			var geom = GeometryEngine.Project(currentViewpoint.TargetGeometry, SpatialReferences.WebMercator);
+			var viewpointExtent = geom.Extent; 
 
 			MapPoint center = viewpointExtent.GetCenter();
 			double lat = center.Y;
@@ -78,7 +79,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				new MapPoint(lon - 1.5 * lonOffset, lat + latOffset),
 				new MapPoint(lon - lonOffset, lat)
 			};
-			_unsimplifiedPolygon = new Polygon(points, MyMapView.SpatialReference);
+			_unsimplifiedPolygon = new Polygon(points, SpatialReferences.WebMercator);
 
 			_polygonOverlay.Graphics.Clear();
 			_polygonOverlay.Graphics.Add(new Graphic(_unsimplifiedPolygon));
@@ -94,7 +95,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				var query = new Query(geometry)
 				{
 					ReturnGeometry = true,
-					OutSpatialReference = MyMapView.SpatialReference,
+					OutSpatialReference = SpatialReferences.WebMercator,
 					SpatialRelationship = SpatialRelationship.Contains,
 					OutFields = OutFields.All
 				};

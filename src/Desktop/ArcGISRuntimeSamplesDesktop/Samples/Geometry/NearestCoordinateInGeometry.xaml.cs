@@ -42,6 +42,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			MyMapView.NavigationCompleted += MyMapView_NavigationCompleted;
 		}
 
+		private CancellationTokenSource cts = new CancellationTokenSource();
 		private async void MyMapView_NavigationCompleted(object sender, EventArgs e)
 		{
 			try
@@ -131,7 +132,7 @@ namespace ArcGISRuntime.Samples.Desktop
 			Graphic graphic = null;
 			while (graphic == null)
 			{
-				var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+				var point = await SceneDrawHelper.DrawPointAsync(MyMapView, cts.Token);
 				point = (MapPoint)GeometryEngine.Project(point, SpatialReferences.WebMercator);
 
 				graphic = await _graphicsOverlay.HitTestAsync(MyMapView, MyMapView.LocationToScreen(point));
@@ -156,7 +157,7 @@ namespace ArcGISRuntime.Samples.Desktop
 				return;
 
 			txtInstruct.Text = "Click the map to find the nearest coordinate in the selected geometry";
-			var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+			var point = await SceneDrawHelper.DrawPointAsync(MyMapView, cts.Token);
 			point = (MapPoint) GeometryEngine.Project(point, SpatialReferences.WebMercator);
 
 			ProximityResult result = null;

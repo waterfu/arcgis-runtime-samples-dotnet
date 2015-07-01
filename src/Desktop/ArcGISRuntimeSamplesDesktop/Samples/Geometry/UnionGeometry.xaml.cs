@@ -5,8 +5,10 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -27,7 +29,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public UnionGeometry()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-15053000, 2749000, -6540000, 6590000, SpatialReferences.WebMercator)));
             _fillSymbol = layoutGrid.Resources["FillSymbol"] as Symbol;
             _resultGraphics = MyMapView.GraphicsOverlays["resultsOverlay"];
 
@@ -43,7 +45,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
                 var table = gdb.FeatureTables.First(ft => ft.Name == "US-States");
                 _statesLayer = new FeatureLayer() { ID = table.Name, FeatureTable = table };
-                MyMapView.Map.Layers.Insert(1, _statesLayer);
+                MyMapView.Scene.Layers.Insert(1, _statesLayer);
             }
             catch (Exception ex)
             {
@@ -59,8 +61,8 @@ namespace ArcGISRuntime.Samples.Desktop
                 _resultGraphics.Graphics.Clear();
 
                 // wait for user to draw a polygon
-                var poly = await MyMapView.Editor.RequestShapeAsync(DrawShape.Polygon);
-
+	            var poly = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+	            poly = (Polygon) GeometryEngine.Project(poly, SpatialReferences.WebMercator);
                 // Take account of WrapAround
                 var normalizedPoly = GeometryEngine.NormalizeCentralMeridian(poly) as Polygon;
 

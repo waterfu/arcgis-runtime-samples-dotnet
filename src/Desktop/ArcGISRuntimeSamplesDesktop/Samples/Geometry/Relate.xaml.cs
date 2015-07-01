@@ -4,10 +4,12 @@ using Esri.ArcGISRuntime.Layers;
 using Esri.ArcGISRuntime.Symbology;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -33,7 +35,7 @@ namespace ArcGISRuntime.Samples.Desktop
 
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
 
-            MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+            MyMapView.CameraChanged += MyMapView_ExtentChanged;
         }
 
         // Start map interaction
@@ -41,7 +43,7 @@ namespace ArcGISRuntime.Samples.Desktop
         {
             try
             {
-                MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+				MyMapView.CameraChanged -= MyMapView_ExtentChanged;
                 btnDraw.IsEnabled = true;
             }
             catch (Exception ex)
@@ -64,16 +66,24 @@ namespace ArcGISRuntime.Samples.Desktop
                 // Shape One
                 DrawShape drawShape1 = (DrawShape)comboShapeOne.SelectedItem;
                 Esri.ArcGISRuntime.Geometry.Geometry shapeOne = null;
-                if (drawShape1 == DrawShape.Point)
-                    shapeOne = await MyMapView.Editor.RequestPointAsync();
-                else
-                    shapeOne = await MyMapView.Editor.RequestShapeAsync(drawShape1, _symbols[comboShapeOne.SelectedIndex]);
-
+	            if (drawShape1 == DrawShape.Point)
+		            shapeOne = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+				else if (drawShape1 == DrawShape.Polyline)
+					shapeOne = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
+                else if(drawShape1== DrawShape.Polygon)
+					shapeOne = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+	            shapeOne = GeometryEngine.Project(shapeOne, SpatialReferences.WebMercator);
 				_graphicsOverlay.Graphics.Add(new Graphic(shapeOne, _symbols[comboShapeOne.SelectedIndex]));
-
+	            var drawShape2 = (DrawShape) comboShapeTwo.SelectedItem;
+	            Esri.ArcGISRuntime.Geometry.Geometry shapeTwo = null;
                 // Shape Two
-                Esri.ArcGISRuntime.Geometry.Geometry shapeTwo = await MyMapView.Editor.RequestShapeAsync(
-                    (DrawShape)comboShapeTwo.SelectedItem, _symbols[comboShapeTwo.SelectedIndex]);
+				if (drawShape2 == DrawShape.Point)
+					shapeTwo = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
+				else if (drawShape2 == DrawShape.Polyline)
+					shapeTwo = await SceneDrawHelper.DrawPolylineAsync(MyMapView, CancellationToken.None);
+				else if (drawShape2 == DrawShape.Polygon)
+					shapeTwo = await SceneDrawHelper.DrawPolygonAsync(MyMapView, CancellationToken.None);
+				shapeTwo = GeometryEngine.Project(shapeTwo, SpatialReferences.WebMercator);
 
 				_graphicsOverlay.Graphics.Add(new Graphic(shapeTwo, _symbols[comboShapeTwo.SelectedIndex]));
             }
