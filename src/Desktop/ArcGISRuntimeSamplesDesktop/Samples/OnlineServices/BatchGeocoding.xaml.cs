@@ -91,7 +91,7 @@ namespace ArcGISRuntime.Samples.Desktop
 					MyMapView.Overlays.Items.Add(overlay);
 				}
 
-				await MyMapView.SetViewAsync(GeometryEngine.Union(_graphicsOverlay.Graphics.Select(g => g.Geometry)).Extent.Expand(1.5));
+				await MyMapView.SetViewAsync(new Viewpoint(GeometryEngine.Union(_graphicsOverlay.Graphics.Select(g => g.Geometry)).Extent.Expand(1.5)));
 			}
 			catch (Exception ex)
 			{

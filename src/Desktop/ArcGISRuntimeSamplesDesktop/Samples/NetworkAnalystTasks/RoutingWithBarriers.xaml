@@ -11,17 +11,17 @@
             <esri:SimpleRenderer x:Key="BarrierRenderer" Symbol="{StaticResource BarrierSymbol}" />
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView" MapViewTapped="MyMapView_MapViewTapped">
-			<esri:Map InitialViewpoint="-117.24377026205757,32.61710761167467,-116.95879261773452,32.841266856294624,4326">
+        <esri:SceneView x:Name="MyMapView" SceneViewTapped="MyMapView_MapViewTapped">
+			<esri:Scene >
 				<esri:ArcGISTiledMapServiceLayer
                     ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="RouteGraphicsOverlay" Renderer="{StaticResource RouteRenderer}" />
 				<esri:GraphicsOverlay ID="StopGraphicsOverlay"  />
 				<esri:GraphicsOverlay ID="BarrierGraphicsOverlay" Renderer="{StaticResource BarrierRenderer}"/>
-			</esri:MapView.GraphicsOverlays>
-		</esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+		</esri:SceneView>
 
 		<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				HorizontalAlignment="Right" VerticalAlignment="Top"

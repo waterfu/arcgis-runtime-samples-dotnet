@@ -32,7 +32,7 @@ namespace ArcGISRuntime.Samples.Desktop
         public RoutingWithBarriers()
         {
             InitializeComponent();
-
+			MyMapView.SetView(new Viewpoint(new Envelope(-117.24377026205757, 32.61710761167467, -116.95879261773452, 32.841266856294624, SpatialReferences.Wgs84)));
 			_routeGraphicsOverlay = MyMapView.GraphicsOverlays["RouteGraphicsOverlay"];
 			_stopGraphicsOverlay = MyMapView.GraphicsOverlays["StopGraphicsOverlay"];
 			_barrierGraphicsOverlay = MyMapView.GraphicsOverlays["BarrierGraphicsOverlay"];

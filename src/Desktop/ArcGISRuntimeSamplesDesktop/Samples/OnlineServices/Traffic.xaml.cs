@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Geometry;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -21,10 +22,11 @@ namespace ArcGISRuntime.Samples.Desktop
         public Traffic()
         {
             InitializeComponent();
+			MyMapView.SetView(new Viewpoint(new Envelope(-15053000, 2749000, -6540000, 6590000, SpatialReferences.WebMercator)));
             IdentityManager.Current.OAuthAuthorizeHandler = new OAuthAuthorizeHandler();
             IdentityManager.Current.ChallengeHandler = new ChallengeHandler(PortalSecurity.Challenge);
 
-            _trafficLayer = MyMapView.Map.Layers["Traffic"] as ArcGISDynamicMapServiceLayer;
+            _trafficLayer = MyMapView.Scene.Layers["Traffic"] as ArcGISDynamicMapServiceLayer;
 
             MyMapView.LayerLoaded += MyMapView_LayerLoaded;
         }

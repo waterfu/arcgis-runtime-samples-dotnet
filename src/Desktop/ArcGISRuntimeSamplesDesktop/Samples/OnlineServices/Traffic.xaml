@@ -4,16 +4,16 @@
              xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
              xmlns:local="clr-namespace:ArcGISRuntime.Samples.Desktop">
     <Grid x:Name="layoutGrid">
-        <esri:MapView x:Name="MyMapView" MapViewTapped="MyMapView_MapViewTapped">
-            <esri:Map InitialViewpoint="-15053000,2749000,-6540000,6590000,3857">
+        <esri:SceneView x:Name="MyMapView" SceneViewTapped="MyMapView_MapViewTapped">
+            <esri:Scene >
                 <esri:ArcGISTiledMapServiceLayer DisplayName="World Topo (Basemap)"
                     ServiceUri="http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer" />
 
                 <esri:ArcGISDynamicMapServiceLayer ID="Traffic" DisplayName="Traffic" VisibleLayers="2,3,4,6,7"
                     ServiceUri="https://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer" />
-            </esri:Map>
+            </esri:Scene>
 
-            <esri:MapView.Overlays>
+            <esri:SceneView.Overlays>
                 <esri:OverlayItemsControl>
                     <Border x:Name="incidentOverlay" HorizontalAlignment="Right" VerticalAlignment="Top"
                         Background="Black" BorderBrush="White" BorderThickness="2" Padding="6"
@@ -54,8 +54,8 @@
                         </Grid>
                     </Border>
                 </esri:OverlayItemsControl>
-            </esri:MapView.Overlays>
-        </esri:MapView>
+            </esri:SceneView.Overlays>
+        </esri:SceneView>
 
         <Border
 				Background="White" BorderBrush="Black" BorderThickness="1"

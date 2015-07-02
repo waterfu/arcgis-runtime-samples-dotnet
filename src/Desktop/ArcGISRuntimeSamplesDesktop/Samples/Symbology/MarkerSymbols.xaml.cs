@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Esri.ArcGISRuntime.Geometry;
+using TestApp.Desktop;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -25,16 +28,16 @@ namespace ArcGISRuntime.Samples.Desktop
 		public MarkerSymbols()
 		{
 			InitializeComponent();
-			MySceneView.SetView(MyMapView.Map.InitialViewpoint);
+			MyMapView.SetView(new Viewpoint(new Envelope(-15053000, 2749000, -6540000, 6590000, SpatialReferences.WebMercator)));
 			_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
 
-			MyMapView.ExtentChanged += MyMapView_ExtentChanged;
+			MyMapView.CameraChanged += MyMapView_ExtentChanged;
 		}
 
 		// Start map interaction
 		private async void MyMapView_ExtentChanged(object sender, EventArgs e)
 		{
-			MyMapView.ExtentChanged -= MyMapView_ExtentChanged;
+			MyMapView.CameraChanged -= MyMapView_ExtentChanged;
 
 			await SetupSymbolsAsync();
 			DataContext = this;
@@ -45,11 +48,9 @@ namespace ArcGISRuntime.Samples.Desktop
 		// Accept user map clicks and add points to the graphics layer with the selected symbol
 		private async Task AcceptPointsAsync()
 		{
-			while (MyMapView.Extent != null)
+			while (MyMapView.GetCurrentViewpoint(ViewpointType.BoundingGeometry).TargetGeometry.Extent != null)
 			{
-				var point = await MyMapView.Editor.RequestPointAsync();
-				var layer = MySceneView.GraphicsOverlays["graphicsOverlay"];
-				layer.Graphics.Add(new Graphic(point, _symbols[symbolCombo.SelectedIndex]));
+				var point = await SceneDrawHelper.DrawPointAsync(MyMapView, CancellationToken.None);
 				_graphicsOverlay.Graphics.Add(new Graphic(point, _symbols[symbolCombo.SelectedIndex]));
 			}
 		}

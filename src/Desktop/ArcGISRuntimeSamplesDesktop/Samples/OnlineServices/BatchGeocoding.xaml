@@ -44,15 +44,15 @@
             </ControlTemplate>
         </Grid.Resources>
 
-        <esri:MapView x:Name="MyMapView">
-            <esri:Map>
+        <esri:SceneView x:Name="MyMapView">
+            <esri:Scene>
 				<esri:ArcGISTiledMapServiceLayer 
                     ServiceUri="http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
-			</esri:Map>
-			<esri:MapView.GraphicsOverlays>
+			</esri:Scene>
+            <esri:SceneView.GraphicsOverlays>
 				<esri:GraphicsOverlay ID="graphicsOverlay" Renderer="{StaticResource markerRenderer}"/>
-			</esri:MapView.GraphicsOverlays>
-        </esri:MapView>
+			</esri:SceneView.GraphicsOverlays>
+        </esri:SceneView>
 
         <Border
 				Background="White" BorderBrush="Black" BorderThickness="1"

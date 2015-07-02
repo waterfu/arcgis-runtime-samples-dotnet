@@ -80,7 +80,7 @@ namespace ArcGISRuntime.Samples.Desktop
                 progress.Visibility = Visibility.Visible;
 
                 RouteParameters routeParams = await _routeTask.GetDefaultParametersAsync();
-                routeParams.OutSpatialReference = MyMapView.SpatialReference;
+	            routeParams.OutSpatialReference = SpatialReferences.WebMercator;
                 routeParams.ReturnDirections = true;
                 routeParams.DirectionsLengthUnit = LinearUnits.Miles;
 				routeParams.DirectionsLanguage = new CultureInfo("en-Us"); // CultureInfo.CurrentCulture;
