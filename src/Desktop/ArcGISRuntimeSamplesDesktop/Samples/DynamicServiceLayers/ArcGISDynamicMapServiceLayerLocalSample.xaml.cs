@@ -3,6 +3,7 @@ using Esri.ArcGISRuntime.LocalServices;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Esri.ArcGISRuntime.Controls;
 
 namespace ArcGISRuntime.Samples.Desktop
 {
@@ -36,7 +37,9 @@ namespace ArcGISRuntime.Samples.Desktop
                     ID = "arcGISDynamicMapServiceLayer",
                     ServiceUri = localMapService.UrlMapService,
                 };
-
+	            if (arcGISDynamicMapServiceLayer.ServiceInfo == null)
+		            await arcGISDynamicMapServiceLayer.InitializeAsync();
+					MyMapView.SetView(new Viewpoint(arcGISDynamicMapServiceLayer.ServiceInfo.FullExtent));
 				MyMapView.Scene.Layers.Add(arcGISDynamicMapServiceLayer);
             }
             catch (Exception ex)
