@@ -56,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Samples\Scene\QueryElevation3d.xaml.cs">
+      <DependentUpon>QueryElevation3d.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Samples\Scene\ArcGISDynamicMapServiceLayerSample3d.xaml.cs">
       <DependentUpon>ArcGISDynamicMapServiceLayerSample3d.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -524,6 +527,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Samples\Scene\QueryElevation3d.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Samples\Scene\ArcGISDynamicMapServiceLayerSample3d.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
